@@ -1,0 +1,42 @@
+.header__menu_main{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 183px;
+    margin-right: 70px;
+    align-items: center;
+    margin-top: 18px;
+}
+
+.header__link{
+    font-weight: 400;
+    font-style: normal;
+    font-size: 13px;
+    line-height: 16px;
+    color: #000000;
+    text-decoration:none;
+}
+
+.header__link_signin{
+    border: 1px solid #3456F3;
+    padding: 21px;
+    padding-top:8px;
+    padding-bottom: 8px;
+    background-color: #3456F3;
+    border-radius: 10px;
+    list-style-type:none;
+    text-align: center;
+    text-decoration: none;
+    color: #FFFFFF;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 13px;
+    line-height: 16px;
+    margin-left: 30px;
+}
+
+@media screen and (max-width:619px){
+    .header__menu_main{
+        margin-right: 14px;
+    }
+}

@@ -1,0 +1,19 @@
+.input {
+    margin-top: 80px;
+    margin-bottom: 98px;
+    width: 100%;
+    max-width: 1086px;
+    height: 50px;
+    background-color: #F4F4F4;
+    border-color: transparent;
+    border-radius: 5px;
+    border: 0px;
+    padding: 0px;
+}
+
+.input::placeholder{
+    font-size:14px;
+    line-height:18px;
+    color: #A0A0A0;
+    padding-left:20px;
+  }
