@@ -34,7 +34,6 @@
     row-gap: 26px;
     margin-left: 70px;
     max-width: 600px;
-    min-width: 364px;
     
 }
 
@@ -83,6 +82,7 @@
     margin: 0;
     text-align: left;
     padding-top: 73px;
+    
 }
 
 .aboutMe_photo{
@@ -102,6 +102,7 @@
         margin-right: 49px;
         font-size: 12px;
         line-height: 18px;
+        height: 110px;
     }
 
 }
@@ -139,7 +140,7 @@
 
 @media screen and (max-width:619px){
     .aboutMe{
-        height: 980px;
+        height: 1000px;
     }
 
     .aboutMe__title{
@@ -150,22 +151,21 @@
     .aboutMe__github{
         padding-top: 40px;
         align-self: flex-start;
-        margin-left: 30px;
     }
 
     .aboutMe__portfolio{
         flex-direction: column-reverse;
         padding-top: 60px;
         align-items: center;
+        width: 292px;
+        margin: 0 auto;
 
     }
 
     .aboutMe__info{
         align-items: center;
-        margin: 0 auto; 
-        max-width: 292px; 
-        margin-left: 14px;
-        margin-right: 14px;
+        width: 292px;  
+        margin-left: 0px;
     }
 
     .aboutMe_photo{
@@ -175,7 +175,7 @@
     .aboutMe__discription{
         text-align: center;
         font-size: 12px;
-        width: 292px;
+        max-width: 292px;
         height: 212px;
     }
 

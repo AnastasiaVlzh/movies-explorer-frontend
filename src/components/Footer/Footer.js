@@ -17,8 +17,8 @@ function Footer() {
           <div className="footer__info" >
             <p className="footer__text_black">© 2022</p>
             <div className="footer__info_practicum">
-                <p className="footer__info-link"><a className="link footer__link" href="https://practicum.yandex.ru/">Яндекс.Практикум</a></p>
-                <p className="footer__info-link"><a className="link footer__link" href="https://github.com/" >Github</a></p>
+                <p className="footer__info-link"><a className="link footer__link" href="https://practicum.yandex.ru/" target="_blank" rel="noreferrer" >Яндекс.Практикум</a></p>
+                <p className="footer__info-link"><a className="link footer__link" href="https://github.com/" target="_blank" rel="noreferrer" >Github</a></p>
             </div>
 
           </div>

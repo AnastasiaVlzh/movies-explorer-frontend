@@ -34,22 +34,15 @@
     background-size: 36px;
     width: 36px;
     height: 20px;
+    cursor: pointer;
   }
   
   .filter__checkbox:checked + .filter__style {
-    background-image: url(../../images/smalltumb.svg);
+    background-image: url(../../images/smalltumboff.svg);
     background-size: 36px;
     width: 36px;
     height: 20px;
-    transition: background-image linear 1s;
-  }
-  
-  .filter__checkbox:disabled + .filter__style {
-    background-image: url(../../images/smalltumb.svg);
-    background-size: 36px;
-    width: 36px;
-    height: 20px;
-    transition: background-image linear 1s;
+    
   }
   
   /* @media screen and (max-width: 1249px) {

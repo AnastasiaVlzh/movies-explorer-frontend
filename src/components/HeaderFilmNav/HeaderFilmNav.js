@@ -7,8 +7,8 @@ function HeaderMainNav(props) {
       <section className="header__menu">
           <nav className="header__line-menu">
             <NavLink to="/movies" className="link header__link">Фильмы</NavLink>
-            <NavLink to="/saved-movies" className="link header__link">Сохраненные фильмы</NavLink>
-            <NavLink to="/profile" className="link header__link">Аккаунт
+            <NavLink to="/saved-movies" className="link header__link" >Сохраненные фильмы</NavLink>
+            <NavLink to="/profile" className="link header__link" >Аккаунт
               <img className="header__picture" src={accountPic} alt="Логотип аккаунта" />
             </NavLink>
           </nav>

@@ -1,12 +1,11 @@
 import './button.css';
-import searchButton from '../../images/find-button.svg';
 
 function Button() {
   return (
-    <img 
+    <button 
     type="button" 
-    className="button"
-    src={searchButton} 
+    className="search__button"
+ 
     alt="Кнопка поиска"
     />
   );

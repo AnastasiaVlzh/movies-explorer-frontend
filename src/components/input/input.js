@@ -12,6 +12,8 @@ function Input({placeholder,onInputHandler}) {
     className="input"
     placeholder={placeholder}
     onInput={handleInput}
+    required
+    
     />
   );
 }
