@@ -10,7 +10,6 @@ function MobileMenu ({isOpen,onClose}) {
                 <NavLink
                 activeClassName="header__link-active"
                 className="header__link header__link-mobile"
-                target="_blank"
                 exact to="/"
                 onClick={onClose}
                 > 
@@ -19,7 +18,6 @@ function MobileMenu ({isOpen,onClose}) {
                 <NavLink
                 activeClassName="header__link-active"
                 className="header__link header__link-mobile"
-                target="_blank"
                 to="/movies"
                 onClick={onClose}
                 > 
@@ -28,7 +26,6 @@ function MobileMenu ({isOpen,onClose}) {
                 <NavLink
                 activeClassName="header__link-active"
                 className="header__link header__link-mobile"
-                target="_blank"
                 to="/saved-movies"
                 onClick={onClose}
                 > 
