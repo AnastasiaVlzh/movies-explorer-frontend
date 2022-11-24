@@ -55,13 +55,23 @@
 
 .profile__change{
     text-align: center;
-    margin-top: 220px;
     font-weight: 400;
     color: #000000;
     font-style: normal;
     font-size: 13px;
     line-height: 16px;
     cursor: pointer;
+    border: none;
+    background-color: transparent;
+    padding: 0;
+    margin: 0 auto;
+    display: block;
+    margin-top: 220px;
+}
+
+.profile__change:disabled{
+    color: #A0A0A0;
+    cursor:not-allowed;
 }
 
 .profile__logout{
@@ -73,6 +83,13 @@
     font-size: 13px;
     line-height: 16px;
     cursor: pointer;
+}
+.error__profile{
+    top:40px;
+}
+
+.error__profile-name{
+    top:1px;
 }
 
 @media screen and (max-width:400px){

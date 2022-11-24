@@ -3,7 +3,7 @@ import './input.css';
 function Input({placeholder,onInputHandler}) {
 
   function handleInput(event){
-    onInputHandler(event.target.value);
+    onInputHandler(event.target.value)
   }
 
   return (

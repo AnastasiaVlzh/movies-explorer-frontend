@@ -1,8 +1,18 @@
 import './checkbox.css';
 import React from 'react';
 
-function Checkbox() {
+function Checkbox(props) {
   const [checked, setChecked] = React.useState(false);
+
+  function handleSwitchCheckbox(e) {
+    setChecked(!checked);
+    props.handleFilterMovies(checked);
+}
+
+  React.useEffect(() => {
+    setChecked(props.filterMovies);
+
+}, [props.filterMovies]);
 
   return (
     <div className="filter">
@@ -13,7 +23,7 @@ function Checkbox() {
           name="filter"
           id="filter"
           checked={checked}
-          onChange={() => setChecked(!checked)}
+          onChange={handleSwitchCheckbox}
         />
         <span className="filter__style"></span>
         <span className="filter__text">Короткометражки</span>

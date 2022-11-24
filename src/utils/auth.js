@@ -13,7 +13,6 @@ export const register = ({ name, email, password }) => {
   return fetch(`${BASE_URL}/signup`, {
     headers,
     credentials:"include",
-    //mode: 'no-cors',
     method: 'POST',
     body: JSON.stringify({name, email, password }),
   })

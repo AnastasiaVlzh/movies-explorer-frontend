@@ -1,0 +1,40 @@
+.popup{
+    font-family: 'Inter' Arial, Helvetica, sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #F5F5F5;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0.5s, opacity 0.5s;
+    z-index: 1;
+}
+
+.popup_opened{
+    visibility: visible;
+    opacity: 1;
+    margin:100px auto 0px auto;
+    width:400px;
+    height: 300px;
+    padding:10px;
+    background-color: #F5F5F5;
+    border-radius:5px;
+    text-align: center;
+
+}
+
+.popup__close{
+    background: url(../../images/CloseBtn.svg) center no-repeat;
+    width: 22px;
+    height: 22px;
+    border: none;
+    cursor: pointer;
+    position: absolute;
+    top: -10px;
+    right: -20px;
+}
