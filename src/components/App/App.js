@@ -27,6 +27,7 @@ function App() {
 
   const [movies, setMovies] = React.useState(null);
   const [query, setQuery] = React.useState('');
+  const [inputSearch, setInputSearch] = React.useState('');
   const [loading, setLoading] = React.useState(false);
   const [isNotSuccessRequest, setIsNotSuccessRequest] = React.useState(false);
   const [moviesSaved, setMoviesSaved] = React.useState([]);
@@ -117,15 +118,20 @@ function App() {
 
   function onInputHandler(value){
        setQuery(value);
+       localStorage.setItem('query', query);
    }
+
+   const moviesSearch = (value) => value.filter(item =>item.nameRU.toLowerCase().includes(query.toLowerCase()))
 
   function onSubmitHandler(event){
     event.preventDefault();
     setLoading(true)
     moviesApi.getMovies(query)
     .then ((res) => {
-      setMovies(res.filter(item =>item.nameRU.toLowerCase().includes(query.toLowerCase())));
-      localStorage.setItem('movies', JSON.stringify(res));
+      setMovies(moviesSearch(res));
+      localStorage.setItem('movies', JSON.stringify(moviesSearch(res)));
+      //localStorage.setItem('moviesInput', query);
+      
     })
     .catch((err) =>{
       console.log(err)
@@ -134,6 +140,30 @@ function App() {
     })
     .finally(() => setLoading(false));
   }
+
+
+  React.useEffect(() => {
+    const localStorageMovies = JSON.parse(localStorage.getItem('movies'));
+    const localStorageMoviesInput = localStorage.getItem('query');
+
+      // moviesApi.getMovies(query)
+      //     .then((res) => {
+      //       setMovies(moviesSearch(res));
+      //       })
+      //       .catch((err) =>{
+      //         console.log(err)
+      //         setLoading(false);
+      //         setIsNotSuccessRequest(true);
+      //       })
+        if (localStorageMovies) {
+            setMovies(localStorageMovies);
+          }
+ 
+          if (localStorageMoviesInput) {
+            setQuery(localStorageMoviesInput);
+          }
+
+    }, []);
 
 
 //   React.useEffect(() => {
@@ -199,7 +229,7 @@ function App() {
         setLoading(true)
         MainApi.getSavedMovies()
         .then ((res) => {
-          setSavedMoviesList(res.filter(item =>item.nameRU.toLowerCase().includes(query.toLowerCase())));
+          setSavedMoviesList(moviesSearch(res));
         })
         .catch((err) =>{
           console.log(err)
@@ -237,13 +267,13 @@ function App() {
       loading={loading}
       setLoading={setLoading}
       onSubmit={onSubmitHandler}
-      onInput={onInputHandler}
       isNotSuccessRequest={isNotSuccessRequest}
       onMovieLike={handleMoveLike}
       onMovieDelete={handleMovieDelete}
       moviesSaved={moviesSaved}
       filterMovies={filterMovies}
       handleFilterMovies={handleFilterMovies}
+      onInput={onInputHandler}
       />
       <ProtectedRoute
         component={SavedMovies} 
@@ -257,7 +287,6 @@ function App() {
         onMovieDelete={handleMovieDelete}
         onSubmit={onSubmitSavedMoviesHandler}
         moviesSaved={moviesSaved}
-        onInput={onInputHandler}
         filterMovies={filterMovies}
         handleFilterMovies={handleFilterMovies}
         
