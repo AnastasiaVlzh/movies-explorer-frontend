@@ -5,23 +5,12 @@ import Input from "../input/input";
 import Checkbox from "../checkbox/checkbox";
 import React from 'react';
 
-function SearchForm ({onSubmit,onInput,filterMovies,movies,handleFilterMovies}) {
-
-//   const [query, setQuery] = React.useState('');
-
-//   function onInputHandler(value){
-//     setQuery(value);
-// }
+function SearchForm ({onSubmit,onInput,filterMovies,movies,handleFilterMovies,setInput,isSavedMoviesList}) {
 
   function handleInput(event){
     onInput(event.target.value)
   }
 
-//   function handleSubmit(event) {
-//     event.preventDefault();
-
-//     onSubmit(query);
-// }
 
   return (
       <section className="search">
@@ -30,6 +19,7 @@ function SearchForm ({onSubmit,onInput,filterMovies,movies,handleFilterMovies}) 
             placeholder= "Фильм"
             onInputHandler={onInput}
             onInput={handleInput}
+            setInput={setInput}
             />
             <Button/>
         </form>
@@ -37,6 +27,7 @@ function SearchForm ({onSubmit,onInput,filterMovies,movies,handleFilterMovies}) 
         filterMovies={filterMovies}
         movies={movies}
         handleFilterMovies={handleFilterMovies}
+        isSavedMoviesList={isSavedMoviesList}
         />
 
       </section>

@@ -17,6 +17,7 @@ import { moviesApi } from '../../utils/MoviesApi'
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute'
 import InfoTooltip from '../InfoTooltip/InfoTooltip'
 import { useLocation } from 'react-router-dom';
+import { useLocalStorage } from '../localStorage/useLocalStorage'
 
 function App() {
   const [currentUser, setСurrentUser] = React.useState(null);
@@ -26,7 +27,7 @@ function App() {
   const [authMessage, setAuthMessage] = React.useState(false);
 
   const [movies, setMovies] = React.useState(null);
-  const [query, setQuery] = React.useState('');
+  const [query, setQuery] = useLocalStorage("query", " ");
   const [inputSearch, setInputSearch] = React.useState('');
   const [loading, setLoading] = React.useState(false);
   const [isNotSuccessRequest, setIsNotSuccessRequest] = React.useState(false);
@@ -118,7 +119,6 @@ function App() {
 
   function onInputHandler(value){
        setQuery(value);
-       localStorage.setItem('query', query);
    }
 
    const moviesSearch = (value) => value.filter(item =>item.nameRU.toLowerCase().includes(query.toLowerCase()))
@@ -129,8 +129,6 @@ function App() {
     moviesApi.getMovies(query)
     .then ((res) => {
       setMovies(moviesSearch(res));
-      localStorage.setItem('movies', JSON.stringify(moviesSearch(res)));
-      //localStorage.setItem('moviesInput', query);
       
     })
     .catch((err) =>{
@@ -144,37 +142,14 @@ function App() {
 
   React.useEffect(() => {
     const localStorageMovies = JSON.parse(localStorage.getItem('movies'));
-    const localStorageMoviesInput = localStorage.getItem('query');
 
-      // moviesApi.getMovies(query)
-      //     .then((res) => {
-      //       setMovies(moviesSearch(res));
-      //       })
-      //       .catch((err) =>{
-      //         console.log(err)
-      //         setLoading(false);
-      //         setIsNotSuccessRequest(true);
-      //       })
         if (localStorageMovies) {
             setMovies(localStorageMovies);
           }
  
-          if (localStorageMoviesInput) {
-            setQuery(localStorageMoviesInput);
-          }
-
     }, []);
 
 
-//   React.useEffect(() => {
-//     const localStorageMovies = JSON.parse(localStorage.getItem('movies'));
-//     //const localStorageFilmsInputSearch = localStorage.getItem('filmsInputSearch');
-
-//     if (localStorageMovies) {
-//       setMovies(localStorageMovies.filter(item =>item.nameRU.toLowerCase().includes(query.toLowerCase())));
-//   }
-
-// }, [query]);
 
   function handleMoveLike(data) {       
     MainApi.likedAndSavedMovie(data)
@@ -274,6 +249,7 @@ function App() {
       filterMovies={filterMovies}
       handleFilterMovies={handleFilterMovies}
       onInput={onInputHandler}
+      setInput={query}
       />
       <ProtectedRoute
         component={SavedMovies} 

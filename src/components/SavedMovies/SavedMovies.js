@@ -27,6 +27,7 @@ function SavedMovies(props) {
         onInput={props.onInput}
         filterMovies={props.filterMovies}
         handleFilterMovies={props.handleFilterMovies}
+        isSavedMoviesList={props.isSavedMoviesList}
       />
       {props.loading ? (
         <Preloader />

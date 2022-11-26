@@ -18,7 +18,9 @@ function Movies(props) {
         onInput={props.onInput}
         filterMovies={props.filterMovies}
         handleFilterMovies={props.handleFilterMovies}
+        setInput={props.setInput}
       />
+      
       {props.loading ? (
         <Preloader />
       ) : (

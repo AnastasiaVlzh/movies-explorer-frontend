@@ -1,17 +1,8 @@
 import './input.css';
 import React from 'react';
 
-function Input({placeholder,onInput}) {
+function Input({placeholder,onInput,setInput}) {
 
-//   const [query, setQuery] = React.useState('');
-
-//   function onInputHandler(value){
-//     setQuery(value);
-// }
-
-//   function handleInput(event){
-//     onInputHandler(event.target.value)
-//   }
 
   return (
     <input 
@@ -20,6 +11,7 @@ function Input({placeholder,onInput}) {
     placeholder={placeholder}
     onInput={onInput}
     required
+    value={setInput}
     
     />
   );
