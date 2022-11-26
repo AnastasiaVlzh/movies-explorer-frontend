@@ -3,9 +3,8 @@ import React from 'react';
 import { useLocalStorage } from '../localStorage/useLocalStorage'
 
 function Checkbox(props) {
-  //const [checked, setChecked] = React.useState(false);
-  const [checked, setChecked] = useLocalStorage("checked", false);
-
+  const [checked, setChecked] = React.useState(false);
+  //const [checked, setChecked] = useLocalStorage("checked", false);
 
   function handleSwitchCheckbox(e) {
     setChecked(!checked);
@@ -16,6 +15,7 @@ function Checkbox(props) {
     setChecked(props.filterMovies);
 
 }, [props.filterMovies]);
+
 
   return (
     <div className="filter">

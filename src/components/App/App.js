@@ -28,7 +28,6 @@ function App() {
 
   const [movies, setMovies] = React.useState(null);
   const [query, setQuery] = useLocalStorage("query", " ");
-  const [inputSearch, setInputSearch] = React.useState('');
   const [loading, setLoading] = React.useState(false);
   const [isNotSuccessRequest, setIsNotSuccessRequest] = React.useState(false);
   const [moviesSaved, setMoviesSaved] = React.useState([]);
@@ -48,11 +47,9 @@ function App() {
       .register(data)
       .then(() => {
         history.push('/signin');
-        //setAuthMessage(true);
       })
       .catch((err)=>{
         console.log(err);
-        //setAuthMessage(false);
       })
   };
 
@@ -61,8 +58,6 @@ function App() {
       .authorize(data)
       .then((res) => {
         setIsLoggedIn(true);
-        // setСurrentUser( res )
-        // console.log(currentUser);
       })
       .catch((err) => console.log(err));
   }
@@ -95,8 +90,6 @@ function App() {
       setСurrentUser(res)
       setIsInfoTooltipOpen(true)
       setAuthMessage(true);
-      // console.log(currentUser)
-      // console.log("данные изменены")
     })
     .catch(err => {
       console.log(err);

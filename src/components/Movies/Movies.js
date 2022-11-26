@@ -20,7 +20,7 @@ function Movies(props) {
         handleFilterMovies={props.handleFilterMovies}
         setInput={props.setInput}
       />
-      
+
       {props.loading ? (
         <Preloader />
       ) : (
