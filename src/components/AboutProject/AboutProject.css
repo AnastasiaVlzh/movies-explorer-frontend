@@ -1,0 +1,150 @@
+.aboutProject{
+    width: 100%;
+    max-width: 1280px;
+    height: 608px;
+    margin: 0 auto;
+
+}
+
+.aboutProject__title{
+    height: 50px;
+    margin-top: 110px;
+    margin-left: 70px;
+    margin-right: 70px;
+    border-bottom: 1px solid;
+    border-bottom-color: #000000;
+    font-weight: 400;
+    color: #000000;
+    font-style: normal;
+    font-size: 22px;
+    line-height: 27px;
+}
+
+
+.aboutProject__period{
+    max-width: 1140px;
+    display: flex;
+    flex-direction: row;
+    margin-left: 70px;
+    margin-right: 70px;
+    margin-top: 70px;
+    
+}
+
+.aboutProject__discription{
+    display: flex;
+    flex-direction: column;
+    max-width: 550px;
+}
+
+.aboutProject__discription_main-text{
+    font-weight: 400;
+    color: #000000;
+    font-style: normal;
+    font-size: 20px;
+    line-height: 24px;
+    max-width: 550px;
+    margin-right: 40px;
+    margin-bottom: 0px;
+}
+
+
+
+.aboutProject__discription_text{
+    font-weight: 400;
+    color: #000000;
+    font-style: normal;
+    font-size: 14px;
+    line-height: 24px;
+    margin-right: 40px;
+    margin-bottom: 0px;
+    margin-top: 26px;
+}
+
+.aboutProject__timeline{
+    display: flex;
+    flex-direction: row;
+    margin-left: 70px;
+    margin-right: 70px;
+    justify-content: flex-start;
+    max-width: 1140px;
+    height: 36px;
+    margin-top: 110px;
+}
+
+.aboutProject__timeline_block{
+    margin-top: 0px;
+    margin-bottom: 0px;
+    background-color: #3456F3;
+    width: 228px;
+}
+
+.aboutProject__timeline_block_gray{
+    background-color: #F2F2F2;
+    width: 912px;
+}
+
+.aboutProject__timeline_text{
+    font-weight: 400;
+    color: #FFFFFF;
+    font-style: normal;
+    font-size: 14px;
+    line-height: 18px;
+    text-align: center;
+    margin-top: 9px;
+    margin-bottom: 9px;
+}
+
+.aboutProject__timeline_text_black{
+    color: #000000;
+}
+
+.aboutProject__timeline_transparent{
+    margin-top: 0px;
+}
+
+.aboutProject__timeline_block_transparent{
+    background-color: transparent;
+}
+
+.aboutProject__timeline_text_grey{
+    color: #A0A0A0;
+}
+
+@media screen and (max-width:550px){
+    .aboutProject{
+        height: 641px;
+    }
+
+    .aboutProject__title{
+        font-size: 18px;
+        margin-left: 18px;
+        margin-right: 18px;
+    }
+    .aboutProject__period{
+        flex-direction: column;
+        margin-left: 18px;
+        margin-right: 18px;
+        
+    }
+
+    .aboutProject__discription_main-text{
+        font-size: 18px;
+    }
+
+    .aboutProject__discription_text{
+        font-size: 11px;
+        margin-right: 0;
+    }
+
+    .aboutProject__timeline{
+        margin-left: 18px;
+        margin-right: 18px;
+    }
+
+    .aboutProject__timeline_text{
+        font-size: 11px;
+
+    }
+
+}
