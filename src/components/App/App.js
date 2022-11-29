@@ -122,7 +122,7 @@ function App() {
     moviesApi.getMovies(query)
     .then ((res) => {
       setMovies(moviesSearch(res));
-      localStorage.setItem('movies', JSON.stringify(res));
+      localStorage.setItem('movies', JSON.stringify(moviesSearch(res)));
     })
     .catch((err) =>{
       console.log(err)
