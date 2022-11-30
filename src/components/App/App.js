@@ -33,6 +33,7 @@ function App() {
   const [moviesSaved, setMoviesSaved] = React.useState([]);
   const [savedMoviesList, setSavedMoviesList] = React.useState([]);
   const [filterMovies, setFilterMovies] = React.useState(true);
+  const [filterShortMovies, setFilterShortMovies] = React.useState(true);
   
 
   const history = useHistory();
@@ -209,8 +210,18 @@ function App() {
 
       function handleFilterMovies() {
         setFilterMovies(!filterMovies);
+        localStorage.setItem('checkbox', !filterMovies);
     }
 
+    function handleFilterShortMovies() {
+      setFilterShortMovies(!filterShortMovies);
+      
+  }
+
+    React.useEffect(() => {
+      const checkbox = localStorage.getItem('checkbox');
+      setFilterMovies(JSON.parse(checkbox));
+    }, []);
 
 
       function closePopups(){
@@ -258,8 +269,8 @@ function App() {
         onMovieDelete={handleMovieDelete}
         onSubmit={onSubmitSavedMoviesHandler}
         moviesSaved={moviesSaved}
-        filterMovies={filterMovies}
-        handleFilterMovies={handleFilterMovies}
+        filterShortMovies={filterShortMovies}
+        handleFilterShortMovies={handleFilterShortMovies}
         
       /> 
       <ProtectedRoute

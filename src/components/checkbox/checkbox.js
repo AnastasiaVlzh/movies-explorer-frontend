@@ -4,11 +4,16 @@ import { useLocalStorage } from '../localStorage/useLocalStorage'
 
 function Checkbox(props) {
   const [checked, setChecked] = React.useState(false);
-  //const [checked, setChecked] = useLocalStorage("checked", false);
+  const [checkedShort, setCheckedShort] = React.useState(true);
 
   function handleSwitchCheckbox(e) {
     setChecked(!checked);
     props.handleFilterMovies(checked);
+}
+
+function handleSwitchShortFilmCheckbox(e) {
+  setCheckedShort(!checkedShort);
+  props.handleFilterShortMovies(checkedShort)
 }
 
   React.useEffect(() => {
@@ -19,7 +24,8 @@ function Checkbox(props) {
 
   return (
     <div className="filter">
-      <label className="filter__label">
+      {!props.isSavedMoviesList?
+      (<label className="filter__label">
         <input
           className="filter__checkbox"
           type="checkbox"
@@ -30,7 +36,23 @@ function Checkbox(props) {
         />
         <span className="filter__style"></span>
         <span className="filter__text">Короткометражки</span>
-      </label>
+      </label>)
+      :
+      (<label className="filter__label">
+        <input
+          className="filter__checkbox"
+          type="checkbox"
+          name="filter"
+          id="filter"
+          checked={checkedShort}
+          onChange={handleSwitchShortFilmCheckbox}
+        />
+        <span className="filter__style"></span>
+        <span className="filter__text">Короткометражки</span>
+      </label>)
+      
+      }
+
     </div>
   );
 };

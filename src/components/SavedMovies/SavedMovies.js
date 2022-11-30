@@ -25,15 +25,15 @@ function SavedMovies(props) {
       <SearchForm 
         onSubmit={props.onSubmit}
         onInput={props.onInput}
-        filterMovies={props.filterMovies}
-        handleFilterMovies={props.handleFilterMovies}
+        filterShortMovies={props.filterShortMovies}
+        handleFilterShortMovies={props.handleFilterShortMovies}
         isSavedMoviesList={props.isSavedMoviesList}
       />
       {props.loading ? (
         <Preloader />
       ) : (
       <MoviesCardList 
-        movies={props.filterMovies? props.savedMoviesList : filterShortMovies(props.savedMoviesList)}
+        movies={props.filterShortMovies? props.savedMoviesList : filterShortMovies(props.savedMoviesList)}
         savedMoviesList={props.savedMoviesList}
         setSavedMoviesList={props.setSavedMoviesList}
         isSavedMoviesList={props.isSavedMoviesList}

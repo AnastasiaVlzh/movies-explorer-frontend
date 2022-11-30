@@ -5,7 +5,7 @@ import Input from "../input/input";
 import Checkbox from "../checkbox/checkbox";
 import React from 'react';
 
-function SearchForm ({onSubmit,onInput,filterMovies,movies,handleFilterMovies,setInput,isSavedMoviesList}) {
+function SearchForm ({onSubmit,onInput,filterMovies,movies,handleFilterMovies,setInput,isSavedMoviesList,handleFilterShortMovies}) {
 
   function handleInput(event){
     onInput(event.target.value)
@@ -28,6 +28,7 @@ function SearchForm ({onSubmit,onInput,filterMovies,movies,handleFilterMovies,se
         movies={movies}
         handleFilterMovies={handleFilterMovies}
         isSavedMoviesList={isSavedMoviesList}
+        handleFilterShortMovies={handleFilterShortMovies}
         />
 
       </section>
