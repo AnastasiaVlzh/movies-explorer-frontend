@@ -1,6 +1,5 @@
 import './checkbox.css';
 import React from 'react';
-import { useLocalStorage } from '../localStorage/useLocalStorage'
 
 function Checkbox(props) {
   const [checked, setChecked] = React.useState(false);
@@ -21,6 +20,10 @@ function handleSwitchShortFilmCheckbox(e) {
 
 }, [props.filterMovies]);
 
+React.useEffect(() => {
+  setCheckedShort(props.filterShortMovies);
+
+}, [props.filterShortMovies]);
 
   return (
     <div className="filter">

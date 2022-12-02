@@ -111,37 +111,114 @@ function App() {
       .catch((err) => console.log(err));
   }
 
-  function onInputHandler(value){
-       setQuery(value);
-   }
+  // function onInputHandler(value){
+  //      setQuery(value);
+  //  }
 
    const moviesSearch = (value) => value.filter(item =>item.nameRU.toLowerCase().includes(query.toLowerCase()))
 
-  function onSubmitHandler(event){
-    event.preventDefault();
-    setLoading(true)
-    moviesApi.getMovies(query)
-    .then ((res) => {
-      setMovies(moviesSearch(res));
-      localStorage.setItem('movies', JSON.stringify(moviesSearch(res)));
+
+
+
+
+  
+ 
+  // function onSubmitHandler(value) {
+  //   if (movies.length > 0) {
+  //     moviesStorage(moviesSearch(value))
+  //     } else {
+  //       moviesApi.getMovies(query)
+  //         .then ((res) => {
+  //           setMovies(moviesSearch(res));
+  //     })
+  //     .catch((err) =>{
+  //       console.log(err)
+  //       setLoading(false);
+  //       setIsNotSuccessRequest(true);
+  //     })
+  //   }
+  // }
+
+
+
+  // function onSubmitHandler(event){
+  //   event.preventDefault();
+  //   setLoading(true)
+  //   moviesApi.getMovies(query)
+  //   .then ((res) => {
+  //     setMovies(moviesSearch(res));
+  //     localStorage.setItem('movies', JSON.stringify(moviesSearch(res)));
+  //   })
+  //   .catch((err) =>{
+  //     console.log(err)
+  //     setLoading(false);
+  //     setIsNotSuccessRequest(true);
+  //   })
+  //   .finally(() => setLoading(false));
+  // }
+
+
+  // function onSubmitHandler(event){
+  //   event.preventDefault();
+  //   setLoading(true)
+  //   moviesApi.getMovies(query)
+  //   .then ((res) => {
+  //     setMovies(moviesSearch(res));
+  //     localStorage.setItem('movies', JSON.stringify(moviesSearch(res)));
+  //   })
+  //   .catch((err) =>{
+  //     console.log(err)
+  //     setLoading(false);
+  //     setIsNotSuccessRequest(true);
+  //   })
+  //   .finally(() => setLoading(false));
+  // }
+
+
+  function handleMoviesSearch(value) {
+    if (movies.length === 0) {
+    moviesApi
+    .getMovies()
+    .then((res) => {
+      setLoading(true)
+      //setMovies(res)
+      localStorage.setItem('movies', JSON.stringify(res));
+      moviesSavedSearch(value)
     })
-    .catch((err) =>{
+    .catch((err) => {
       console.log(err)
-      setLoading(false);
-      setIsNotSuccessRequest(true);
     })
     .finally(() => setLoading(false));
   }
+    moviesSavedSearch(value)
+
+}
+
+const moviesSavedSearch = React.useCallback((data) => {
+      const localStorageMovies = JSON.parse(localStorage.getItem('movies'));
+      if (localStorageMovies) {
+
+        const filterOuery = (item) => {
+          return JSON.stringify(item.nameRU)
+            .toLowerCase().includes(data);
+        };
+
+        const moviesArray = localStorageMovies.filter(filterOuery);
+        setMovies(moviesArray)
+      }
+ 
+    }, []);
 
 
-  React.useEffect(() => {
+    React.useEffect(() => {
     const localStorageMovies = JSON.parse(localStorage.getItem('movies'));
 
         if (localStorageMovies) {
-            setMovies(localStorageMovies);
+          setMovies(localStorageMovies.filter(item =>item.nameRU.toLowerCase().includes(query.toLowerCase())));
           }
  
     }, []);
+
 
 
 
@@ -188,7 +265,7 @@ function App() {
 
 
       React.useEffect(() => {
-        if (!isSavedMoviesList) {
+        if (isSavedMoviesList) {
           setSavedMoviesList(moviesSaved);
         }
       }, [savedMoviesList, moviesSaved]);
@@ -247,15 +324,15 @@ function App() {
       movies={movies}  
       loading={loading}
       setLoading={setLoading}
-      onSubmit={onSubmitHandler}
+      onSubmit={handleMoviesSearch}
       isNotSuccessRequest={isNotSuccessRequest}
       onMovieLike={handleMoveLike}
       onMovieDelete={handleMovieDelete}
       moviesSaved={moviesSaved}
       filterMovies={filterMovies}
       handleFilterMovies={handleFilterMovies}
-      onInput={onInputHandler}
-      setInput={query}
+      //onInput={onInputHandler}
+      //setInput={query}
       />
       <ProtectedRoute
         component={SavedMovies} 

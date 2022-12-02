@@ -15,10 +15,10 @@ function Movies(props) {
     <section>
       <SearchForm 
         onSubmit={props.onSubmit}
-        onInput={props.onInput}
+        //onInput={props.onInput}
         filterMovies={props.filterMovies}
         handleFilterMovies={props.handleFilterMovies}
-        setInput={props.setInput}
+        //setInput={props.setInput}
       />
 
       {props.loading ? (
