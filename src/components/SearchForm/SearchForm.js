@@ -6,25 +6,25 @@ import Checkbox from "../checkbox/checkbox";
 import React from 'react';
 import { useLocalStorage } from '../localStorage/useLocalStorage'
 
-function SearchForm ({onSubmit,onInput,filterMovies,movies,handleFilterMovies,isSavedMoviesList,handleFilterShortMovies,filterShortMovies}) {
+function SearchForm ({onSubmit,onInput,filterMovies,movies,handleFilterMovies,isSavedMoviesList,handleFilterShortMovies,filterShortMovies,query}) {
 
-  const [query, setQuery] = useLocalStorage("query", " ");
+  //const [query, setQuery] = useLocalStorage("query", "");
   const [queryShort, setQueryShort] = React.useState('');
 
 // страница с фильмами
 
-  function onInputHandler(value){
-    setQuery(value);
-  }
+  // function onInputHandler(value){
+  //   setQuery(value);
+  // }
 
-  function handleInput(event){
-    onInputHandler(event.target.value)
-  }
+  // function handleInput(event){
+  //   onInput(event.target.value)
+  // }
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    onSubmit(query);
-  }
+  // function handleSubmit(e) {
+  //   e.preventDefault();
+  //   onSubmit(query);
+  // }
 
 // страница с сохраненными фильмами
 
@@ -44,11 +44,11 @@ function handleInputShort(event){
 
   return (
       <section className="search">
-        <form onSubmit={handleSubmit} className="search__form">
+        <form onSubmit={onSubmit} className="search__form">
             <Input 
             placeholder= "Фильм"
             onInputHandler={onInput}
-            onInput={!isSavedMoviesList? handleInput : handleInputShort }
+            onInput={!isSavedMoviesList? onInput : handleInputShort }
             setInput={!isSavedMoviesList? query : queryShort}
             isSavedMoviesList={isSavedMoviesList}
             />

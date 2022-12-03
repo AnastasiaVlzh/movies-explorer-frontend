@@ -47,7 +47,11 @@ function App() {
     return auth
       .register(data)
       .then(() => {
-        history.push('/signin');
+        onLogin({
+          email: data.email,
+          password: data.password,
+        });
+        history.push('/movies');
       })
       .catch((err)=>{
         console.log(err);
@@ -107,21 +111,17 @@ function App() {
         setUserInfo('');
         console.log(userInfo)
         history.push('/signin');
+        localStorage.clear();
       })
       .catch((err) => console.log(err));
   }
 
-  // function onInputHandler(value){
-  //      setQuery(value);
-  //  }
+  function onInputHandler(event){
+       setQuery(event.target.value);
+   }
 
    const moviesSearch = (value) => value.filter(item =>item.nameRU.toLowerCase().includes(query.toLowerCase()))
 
-
-
-
-
-  
  
   // function onSubmitHandler(value) {
   //   if (movies.length > 0) {
@@ -175,43 +175,49 @@ function App() {
   // }
 
 
-  function handleMoviesSearch(value) {
-    if (movies.length === 0) {
+  function handleMoviesSearch(e) {
+    e.preventDefault();
+    const localStorageMovies = JSON.parse(localStorage.getItem('movies'));
+    if (localStorageMovies === null) {
     moviesApi
     .getMovies()
     .then((res) => {
       setLoading(true)
-      //setMovies(res)
       localStorage.setItem('movies', JSON.stringify(res));
-      moviesSavedSearch(value)
+      setMovies(res.filter(item =>item.nameRU.toLowerCase().includes(query.toLowerCase())))
+      //+ сохранять поисковый запрос и значение чекбокса
     })
     .catch((err) => {
       console.log(err)
     })
     .finally(() => setLoading(false));
+  } else {
+    setMovies(localStorageMovies.filter(item =>item.nameRU.toLowerCase().includes(query.toLowerCase())))
+    //+ сохранять поисковый запрос и значение чекбокса
   }
-    moviesSavedSearch(value)
-
 }
 
-const moviesSavedSearch = React.useCallback((data) => {
-      const localStorageMovies = JSON.parse(localStorage.getItem('movies'));
-      if (localStorageMovies) {
+// const moviesSavedSearch = React.useCallback((data) => {
+//       const localStorageMovies = JSON.parse(localStorage.getItem('movies'));
+//       if (localStorageMovies) {
 
-        const filterOuery = (item) => {
-          return JSON.stringify(item.nameRU)
-            .toLowerCase().includes(data);
-        };
+//         const filterOuery = (item) => {
+//           return JSON.stringify(item.nameRU)
+//             .toLowerCase().includes(data);
+//         };
 
-        const moviesArray = localStorageMovies.filter(filterOuery);
-        setMovies(moviesArray)
-      }
+//         const moviesArray = localStorageMovies.filter(filterOuery);
+//         setMovies(moviesArray)
+
+//       }
  
-    }, []);
+//     }, []);
 
 
     React.useEffect(() => {
     const localStorageMovies = JSON.parse(localStorage.getItem('movies'));
+
+    //доставю все результаты из локал стораджа и подставляю в стейт переменные
 
         if (localStorageMovies) {
           setMovies(localStorageMovies.filter(item =>item.nameRU.toLowerCase().includes(query.toLowerCase())));
@@ -265,7 +271,7 @@ const moviesSavedSearch = React.useCallback((data) => {
 
 
       React.useEffect(() => {
-        if (isSavedMoviesList) {
+        if (!isSavedMoviesList) {
           setSavedMoviesList(moviesSaved);
         }
       }, [savedMoviesList, moviesSaved]);
@@ -331,7 +337,8 @@ const moviesSavedSearch = React.useCallback((data) => {
       moviesSaved={moviesSaved}
       filterMovies={filterMovies}
       handleFilterMovies={handleFilterMovies}
-      //onInput={onInputHandler}
+      onInput={onInputHandler}
+      query={query}
       //setInput={query}
       />
       <ProtectedRoute

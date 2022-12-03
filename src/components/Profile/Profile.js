@@ -45,6 +45,8 @@ function Profile(props) {
             mode:"onBlur"
         })
 
+        //написать валидатор и добавить в useForm, посмотреть как свой валидатор добавить
+        // то же что в логин + сравнить предыдущее значение с текущим
 
     return (
         <div className="profile">
@@ -55,7 +57,7 @@ function Profile(props) {
                   required:"Обязательное поле",
                   pattern: /^(([a-zA-Z' -]{1,80})|([а-яА-ЯЁёІіЇїҐґЄє' -]{1,80}))$/u,
                   })} 
-                  onChange={handleNameChange}  />
+                  onChange={handleNameChange}  /> 
                 <span className="error">{errors?.name && <p className="error error__profile-name"> {errors?.name.message || "Поле может содержать только латиницу, кириллицу, пробел или дефис"}</p>}</span>
                 <label htmlFor ="email" className="profile__label">E-mail</label>
                 <input className="profile__input" id='email' name="email" type='email' value={email} {...register('email',{

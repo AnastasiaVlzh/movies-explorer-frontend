@@ -2,7 +2,7 @@ import './checkbox.css';
 import React from 'react';
 
 function Checkbox(props) {
-  const [checked, setChecked] = React.useState(false);
+  const [checked, setChecked] = React.useState(true);
   const [checkedShort, setCheckedShort] = React.useState(true);
 
   function handleSwitchCheckbox(e) {

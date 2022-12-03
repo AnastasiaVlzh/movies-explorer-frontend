@@ -15,9 +15,10 @@ function Movies(props) {
     <section>
       <SearchForm 
         onSubmit={props.onSubmit}
-        //onInput={props.onInput}
+        onInput={props.onInput}
         filterMovies={props.filterMovies}
         handleFilterMovies={props.handleFilterMovies}
+        query={props.query}
         //setInput={props.setInput}
       />
 
@@ -33,6 +34,7 @@ function Movies(props) {
         onMovieDelete={props.onMovieDelete}
         moviesSaved={props.moviesSaved}
         isLikedAndSaved={props.isLikedAndSaved}
+
       />
       )}
     </section>
