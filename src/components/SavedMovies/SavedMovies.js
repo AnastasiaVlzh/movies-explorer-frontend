@@ -26,8 +26,10 @@ function SavedMovies(props) {
         onSubmit={props.onSubmit}
         onInput={props.onInput}
         filterShortMovies={props.filterShortMovies}
-        handleFilterShortMovies={props.handleFilterShortMovies}
+        handleFilter={props.handleFilter}
         isSavedMoviesList={props.isSavedMoviesList}
+        checked={props.checked}
+        setChecked={props.setChecked}
       />
       {props.loading ? (
         <Preloader />

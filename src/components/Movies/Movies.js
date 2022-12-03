@@ -17,9 +17,12 @@ function Movies(props) {
         onSubmit={props.onSubmit}
         onInput={props.onInput}
         filterMovies={props.filterMovies}
-        handleFilterMovies={props.handleFilterMovies}
+        handleFilter={props.handleFilter}
         query={props.query}
-        //setInput={props.setInput}
+        checked={props.checked}
+        setChecked={props.setChecked}
+        // setCheckedShort={props.setCheckedShort}
+        // checkedShort={props.checkedShort}
       />
 
       {props.loading ? (

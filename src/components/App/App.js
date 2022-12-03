@@ -17,7 +17,6 @@ import { moviesApi } from '../../utils/MoviesApi'
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute'
 import InfoTooltip from '../InfoTooltip/InfoTooltip'
 import { useLocation } from 'react-router-dom';
-import { useLocalStorage } from '../localStorage/useLocalStorage'
 
 function App() {
   const [currentUser, setСurrentUser] = React.useState(null);
@@ -27,13 +26,15 @@ function App() {
   const [authMessage, setAuthMessage] = React.useState(false);
 
   const [movies, setMovies] = React.useState(null);
-  const [query, setQuery] = useLocalStorage("query", " ");
+  const [query, setQuery] = React.useState("");
   const [loading, setLoading] = React.useState(false);
   const [isNotSuccessRequest, setIsNotSuccessRequest] = React.useState(false);
   const [moviesSaved, setMoviesSaved] = React.useState([]);
   const [savedMoviesList, setSavedMoviesList] = React.useState([]);
   const [filterMovies, setFilterMovies] = React.useState(true);
   const [filterShortMovies, setFilterShortMovies] = React.useState(true);
+  const [checked, setChecked] = React.useState(true);
+  const [checkedShort, setCheckedShort] = React.useState(true);
   
 
   const history = useHistory();
@@ -111,7 +112,7 @@ function App() {
         setUserInfo('');
         console.log(userInfo)
         history.push('/signin');
-        localStorage.clear();
+        localStorage.clear()
       })
       .catch((err) => console.log(err));
   }
@@ -119,60 +120,6 @@ function App() {
   function onInputHandler(event){
        setQuery(event.target.value);
    }
-
-   const moviesSearch = (value) => value.filter(item =>item.nameRU.toLowerCase().includes(query.toLowerCase()))
-
- 
-  // function onSubmitHandler(value) {
-  //   if (movies.length > 0) {
-  //     moviesStorage(moviesSearch(value))
-  //     } else {
-  //       moviesApi.getMovies(query)
-  //         .then ((res) => {
-  //           setMovies(moviesSearch(res));
-  //     })
-  //     .catch((err) =>{
-  //       console.log(err)
-  //       setLoading(false);
-  //       setIsNotSuccessRequest(true);
-  //     })
-  //   }
-  // }
-
-
-
-  // function onSubmitHandler(event){
-  //   event.preventDefault();
-  //   setLoading(true)
-  //   moviesApi.getMovies(query)
-  //   .then ((res) => {
-  //     setMovies(moviesSearch(res));
-  //     localStorage.setItem('movies', JSON.stringify(moviesSearch(res)));
-  //   })
-  //   .catch((err) =>{
-  //     console.log(err)
-  //     setLoading(false);
-  //     setIsNotSuccessRequest(true);
-  //   })
-  //   .finally(() => setLoading(false));
-  // }
-
-
-  // function onSubmitHandler(event){
-  //   event.preventDefault();
-  //   setLoading(true)
-  //   moviesApi.getMovies(query)
-  //   .then ((res) => {
-  //     setMovies(moviesSearch(res));
-  //     localStorage.setItem('movies', JSON.stringify(moviesSearch(res)));
-  //   })
-  //   .catch((err) =>{
-  //     console.log(err)
-  //     setLoading(false);
-  //     setIsNotSuccessRequest(true);
-  //   })
-  //   .finally(() => setLoading(false));
-  // }
 
 
   function handleMoviesSearch(e) {
@@ -185,7 +132,7 @@ function App() {
       setLoading(true)
       localStorage.setItem('movies', JSON.stringify(res));
       setMovies(res.filter(item =>item.nameRU.toLowerCase().includes(query.toLowerCase())))
-      //+ сохранять поисковый запрос и значение чекбокса
+      localStorage.setItem('query',query);
     })
     .catch((err) => {
       console.log(err)
@@ -193,36 +140,23 @@ function App() {
     .finally(() => setLoading(false));
   } else {
     setMovies(localStorageMovies.filter(item =>item.nameRU.toLowerCase().includes(query.toLowerCase())))
-    //+ сохранять поисковый запрос и значение чекбокса
+    localStorage.setItem('query',query);
   }
 }
-
-// const moviesSavedSearch = React.useCallback((data) => {
-//       const localStorageMovies = JSON.parse(localStorage.getItem('movies'));
-//       if (localStorageMovies) {
-
-//         const filterOuery = (item) => {
-//           return JSON.stringify(item.nameRU)
-//             .toLowerCase().includes(data);
-//         };
-
-//         const moviesArray = localStorageMovies.filter(filterOuery);
-//         setMovies(moviesArray)
-
-//       }
- 
-//     }, []);
 
 
     React.useEffect(() => {
     const localStorageMovies = JSON.parse(localStorage.getItem('movies'));
-
-    //доставю все результаты из локал стораджа и подставляю в стейт переменные
+    const localStorageInput = localStorage.getItem('query');
 
         if (localStorageMovies) {
           setMovies(localStorageMovies.filter(item =>item.nameRU.toLowerCase().includes(query.toLowerCase())));
           }
- 
+
+        if (localStorageInput) {
+          setQuery(localStorageInput);
+        }
+
     }, []);
 
 
@@ -276,6 +210,8 @@ function App() {
         }
       }, [savedMoviesList, moviesSaved]);
 
+    const moviesSearch = (value) => value.filter(item =>item.nameRU.toLowerCase().includes(query.toLowerCase()))
+
     function onSubmitSavedMoviesHandler(event){
         event.preventDefault();
         setLoading(true)
@@ -291,15 +227,20 @@ function App() {
         .finally(() => setLoading(false));
       }
 
+
+      
       function handleFilterMovies() {
         setFilterMovies(!filterMovies);
-        localStorage.setItem('checkbox', !filterMovies);
-    }
+        setChecked(!checked);
+        localStorage.setItem('checkbox', !checked);
+      }
 
     function handleFilterShortMovies() {
       setFilterShortMovies(!filterShortMovies);
+      setCheckedShort(!checkedShort);
+      console.log(checkedShort)
       
-  }
+    }
 
     React.useEffect(() => {
       const checkbox = localStorage.getItem('checkbox');
@@ -336,10 +277,12 @@ function App() {
       onMovieDelete={handleMovieDelete}
       moviesSaved={moviesSaved}
       filterMovies={filterMovies}
-      handleFilterMovies={handleFilterMovies}
+      handleFilter={handleFilterMovies}
       onInput={onInputHandler}
       query={query}
-      //setInput={query}
+      checked={checked}
+      setChecked={setChecked}
+
       />
       <ProtectedRoute
         component={SavedMovies} 
@@ -354,7 +297,9 @@ function App() {
         onSubmit={onSubmitSavedMoviesHandler}
         moviesSaved={moviesSaved}
         filterShortMovies={filterShortMovies}
-        handleFilterShortMovies={handleFilterShortMovies}
+        handleFilter={handleFilterShortMovies}
+        checked={checkedShort}
+        setChecked={setCheckedShort}
         
       /> 
       <ProtectedRoute
