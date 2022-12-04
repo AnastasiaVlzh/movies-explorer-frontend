@@ -142,7 +142,6 @@ function App() {
       localStorage.setItem('movies', JSON.stringify(res));;
       setMovies(res.filter(item =>item.nameRU.toLowerCase().includes(query.toLowerCase())))
       localStorage.setItem('query',query);
-      //localStorage.setItem('checkbox', checked); 
     })
     .catch((err) => {
       console.log(err)
@@ -156,24 +155,40 @@ function App() {
 
 
 
-    React.useEffect(() => {
+const moviesFilter =  React.useCallback((query) => {
     const localStorageMovies = JSON.parse(localStorage.getItem('movies'));
     const localStorageInput = localStorage.getItem('query');
-    const checkbox = localStorage.getItem('checkbox');
+    //const checkbox = localStorage.getItem('checkbox');
+
 
         if (localStorageMovies) {
-          setMovies(localStorageMovies);
+
+          const filterByQuery = (item) => {
+            return JSON.stringify(item.nameRU)
+              .toLowerCase().includes(query.toLowerCase());
+          };
+
+          const moviesArray = localStorageMovies.filter(filterByQuery);
+
+          setMovies(moviesArray);
+          localStorage.setItem('filterdcards', JSON.stringify(moviesArray));
+          localStorage.setItem('query', query);
           }
 
         if (localStorageInput) {
           setQuery(localStorageInput);
         }
 
-        if(checkbox ){
-          setChecked(checkbox)
-        }
+        // if(checkbox){
+        //   setChecked(checkbox)
+        // }
 
     }, []);
+
+    React.useEffect(() => {
+      const localStorageInput = localStorage.getItem('query');;
+      moviesFilter(localStorageInput);
+    }, [moviesFilter, checked]);
 
 
   function handleMoveLike(data) {       
