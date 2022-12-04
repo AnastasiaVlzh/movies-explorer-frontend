@@ -19,16 +19,16 @@ function SearchForm (props) {
 })
 
 
-  const [queryShort, setQueryShort] = React.useState('');
+//   const [queryShort, setQueryShort] = React.useState('');
 
 
-function onInputHandlerShort(value){
-  setQueryShort(value);
-}
+// function onInputHandlerShort(value){
+//   setQueryShort(value);
+// }
 
-function handleInputShort(event){
-  onInputHandlerShort(event.target.value)
-}
+// function handleInputShort(event){
+//   onInputHandlerShort(event.target.value)
+// }
 
 
   return (
@@ -41,7 +41,7 @@ function handleInputShort(event){
             id='input'
             className="search__input"
             placeholder="Фильм"
-            onInput={!props.isSavedMoviesList? props.onInput : handleInputShort}
+            onInput={props.onInput}
             value={props.query}
             {...register("input", { required: true })}
             />

@@ -30,6 +30,7 @@ function SavedMovies(props) {
         isSavedMoviesList={props.isSavedMoviesList}
         checked={props.checked}
         setChecked={props.setChecked}
+        query={props.query}
       />
       {props.loading ? (
         <Preloader />

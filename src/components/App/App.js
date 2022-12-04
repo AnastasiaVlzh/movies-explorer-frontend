@@ -36,6 +36,7 @@ function App() {
   const [filterShortMovies, setFilterShortMovies] = React.useState(true);
   const [checked, setChecked] = React.useState(true);
   const [checkedShort, setCheckedShort] = React.useState(true);
+  const [queryShort, setQueryShort] = React.useState('');
   
 
   const history = useHistory();
@@ -125,6 +126,10 @@ function App() {
   function onInputHandler(event){
        setQuery(event.target.value);
    }
+  
+   function onInputHandlerShort(event){
+    setQueryShort(event.target.value);
+  }
 
 
   function handleMoviesSearch() {
@@ -178,7 +183,6 @@ function App() {
     })
   }
 
-
   function handleMovieDelete(data) {
     const card = !!data._id ? data : moviesSaved.find((movie) => data.id === movie.movieId);
     MainApi.deleteSavedMovie(card._id)
@@ -190,8 +194,6 @@ function App() {
     })
   }
   
-
-
   function getSavedMovies(){
     MainApi.getSavedMovies()
     .then((res) =>{
@@ -215,23 +217,33 @@ function App() {
         }
       }, [savedMoviesList, moviesSaved]);
 
-    const moviesSearch = (value) => value.filter(item =>item.nameRU.toLowerCase().includes(query.toLowerCase()))
+    //const moviesSearch = (value) => value.filter(item =>item.nameRU.toLowerCase().includes(query.toLowerCase()))
 
-    function onSubmitSavedMoviesHandler(event){
-        event.preventDefault();
-        setLoading(true)
-        MainApi.getSavedMovies()
-        .then ((res) => {
-          setSavedMoviesList(moviesSearch(res));
-        })
-        .catch((err) =>{
-          console.log(err)
-          setLoading(false);
-          setIsNotSuccessRequest(true);
-        })
-        .finally(() => setLoading(false));
+    // function onSubmitSavedMoviesHandler(moviesSaved){
+    //       //setSavedMoviesList(value.filter(item =>item.nameRU.toLowerCase().includes(query.toLowerCase())));
+    //       setSavedMoviesList(moviesSaved.filter(item =>item.nameRU.toLowerCase().includes(query.toLowerCase())))
+    //   }
+    
+      function onSubmitSavedMoviesHandler(data) {
+    
+        const savedMoviesArray = moviesSaved.filter(item =>item.nameRU.toLowerCase().includes(queryShort.toLowerCase()))
+    
+        setSavedMoviesList(savedMoviesArray);
       }
-
+      // const filterSavedMovies = (value) => {
+      //   const filtredMovies = moviesFilters(
+      //     likedAndSavedMovies,
+      //     value,
+      //     checkedShortFilmsMovies,
+      //   );
+      //   setSavedMoviesForRender(filtredMovies);
+      //   if (filtredMovies.length === 0 || null) {
+      //     setIsMoviesNoFoundSaved(true);
+      //   } else {
+      //     setIsMoviesNoFoundSaved(false);
+      //   }
+      // };
+    
 
       
       function handleFilterMovies() {
@@ -305,6 +317,8 @@ function App() {
         handleFilter={handleFilterShortMovies}
         checked={checkedShort}
         setChecked={setCheckedShort}
+        query={queryShort}
+        onInput={onInputHandlerShort}
       /> 
       <ProtectedRoute
         component={Profile} 
