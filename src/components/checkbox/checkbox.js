@@ -3,6 +3,7 @@ import React from 'react';
 
 function Checkbox(props) {
 
+
   return (
     <div className="filter">
       <label className="filter__label">

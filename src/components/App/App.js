@@ -131,7 +131,6 @@ function App() {
     setQueryShort(event.target.value);
   }
 
-
   function handleMoviesSearch() {
     //e.preventDefault();
     const localStorageMovies = JSON.parse(localStorage.getItem('movies'));
@@ -140,9 +139,10 @@ function App() {
     .getMovies()
     .then((res) => {
       setLoading(true)
-      localStorage.setItem('movies', JSON.stringify(res));
+      localStorage.setItem('movies', JSON.stringify(res));;
       setMovies(res.filter(item =>item.nameRU.toLowerCase().includes(query.toLowerCase())))
       localStorage.setItem('query',query);
+      //localStorage.setItem('checkbox', checked); 
     })
     .catch((err) => {
       console.log(err)
@@ -155,21 +155,25 @@ function App() {
 }
 
 
+
     React.useEffect(() => {
     const localStorageMovies = JSON.parse(localStorage.getItem('movies'));
     const localStorageInput = localStorage.getItem('query');
+    const checkbox = localStorage.getItem('checkbox');
 
         if (localStorageMovies) {
-          setMovies(localStorageMovies.filter(item =>item.nameRU.toLowerCase().includes(query.toLowerCase())));
+          setMovies(localStorageMovies);
           }
 
         if (localStorageInput) {
           setQuery(localStorageInput);
         }
 
+        if(checkbox ){
+          setChecked(checkbox)
+        }
+
     }, []);
-
-
 
 
   function handleMoveLike(data) {       
@@ -178,10 +182,18 @@ function App() {
       setMoviesSaved([res, ...moviesSaved]);
       console.log(res.movieId)
     })
-    .catch(err => {
-      console.log(err);
-    })
-  }
+    .catch((err) => {
+      if (err === 'Ошибка: 401') {
+        setIsLoggedIn(false);
+        setMovies([]);
+        setMoviesSaved([]);
+        history.push('/');
+        localStorage.clear();
+      } else {
+        console.log(err);
+      }
+  })
+}
 
   function handleMovieDelete(data) {
     const card = !!data._id ? data : moviesSaved.find((movie) => data.id === movie.movieId);
@@ -217,52 +229,42 @@ function App() {
         }
       }, [savedMoviesList, moviesSaved]);
 
-    //const moviesSearch = (value) => value.filter(item =>item.nameRU.toLowerCase().includes(query.toLowerCase()))
 
-    // function onSubmitSavedMoviesHandler(moviesSaved){
-    //       //setSavedMoviesList(value.filter(item =>item.nameRU.toLowerCase().includes(query.toLowerCase())));
-    //       setSavedMoviesList(moviesSaved.filter(item =>item.nameRU.toLowerCase().includes(query.toLowerCase())))
-    //   }
     
       function onSubmitSavedMoviesHandler(data) {
-    
         const savedMoviesArray = moviesSaved.filter(item =>item.nameRU.toLowerCase().includes(queryShort.toLowerCase()))
-    
         setSavedMoviesList(savedMoviesArray);
       }
-      // const filterSavedMovies = (value) => {
-      //   const filtredMovies = moviesFilters(
-      //     likedAndSavedMovies,
-      //     value,
-      //     checkedShortFilmsMovies,
-      //   );
-      //   setSavedMoviesForRender(filtredMovies);
-      //   if (filtredMovies.length === 0 || null) {
-      //     setIsMoviesNoFoundSaved(true);
-      //   } else {
-      //     setIsMoviesNoFoundSaved(false);
-      //   }
-      // };
-    
 
-      
       function handleFilterMovies() {
         setFilterMovies(!filterMovies);
-        setChecked(!checked);
         localStorage.setItem('checkbox', !checked);
       }
 
+      function handleSwitchCheckbox() {
+        setChecked(!checked);
+        handleFilterMovies(checked);
+    }
+
     function handleFilterShortMovies() {
       setFilterShortMovies(!filterShortMovies);
-      setCheckedShort(!checkedShort);
-      console.log(checkedShort)
-      
+
     }
+
+    function handleSwitchCheckboxShortMovies() {
+      setCheckedShort(!checkedShort);
+      handleFilterShortMovies(checkedShort);
+  }
 
     React.useEffect(() => {
       const checkbox = localStorage.getItem('checkbox');
       setFilterMovies(JSON.parse(checkbox));
     }, []);
+
+    React.useEffect(() => {
+      setChecked(filterMovies);
+  
+  }, [filterMovies]);
 
 
       function closePopups(){
@@ -294,7 +296,7 @@ function App() {
       onMovieDelete={handleMovieDelete}
       moviesSaved={moviesSaved}
       filterMovies={filterMovies}
-      handleFilter={handleFilterMovies}
+      handleFilter={handleSwitchCheckbox}
       onInput={onInputHandler}
       query={query}
       checked={checked}
@@ -314,7 +316,7 @@ function App() {
         onSubmit={onSubmitSavedMoviesHandler}
         moviesSaved={moviesSaved}
         filterShortMovies={filterShortMovies}
-        handleFilter={handleFilterShortMovies}
+        handleFilter={handleSwitchCheckboxShortMovies}
         checked={checkedShort}
         setChecked={setCheckedShort}
         query={queryShort}
