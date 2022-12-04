@@ -20,6 +20,8 @@ import { useLocation } from 'react-router-dom';
 
 function App() {
   const [currentUser, setСurrentUser] = React.useState(null);
+  const [currentName, setCurrentName] = React.useState(null);
+  const [currentEmail, setCurrentEmail] = React.useState(null);
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
   const [userInfo, setUserInfo] = React.useState('');
   const [isInfoTooltipOpen, setIsInfoTooltipOpen] = React.useState(false);
@@ -34,7 +36,6 @@ function App() {
   const [filterShortMovies, setFilterShortMovies] = React.useState(true);
   const [checked, setChecked] = React.useState(true);
   const [checkedShort, setCheckedShort] = React.useState(true);
-  //const [isEmptyInput, setIsEmptyInput] = React.useState(false);
   
 
   const history = useHistory();
@@ -94,8 +95,12 @@ function App() {
     .updateUser({ name, email })
     .then((res)=>{
       setСurrentUser(res)
+      setCurrentName(res.name)
+      setCurrentEmail(res.email)
       setIsInfoTooltipOpen(true)
       setAuthMessage(true);
+      console.log(currentName)
+      console.log(currentEmail)
     })
     .catch(err => {
       console.log(err);
@@ -282,7 +287,6 @@ function App() {
       query={query}
       checked={checked}
       setChecked={setChecked}
-      //isEmptyInput={isEmptyInput}
 
       />
       <ProtectedRoute
@@ -301,14 +305,15 @@ function App() {
         handleFilter={handleFilterShortMovies}
         checked={checkedShort}
         setChecked={setCheckedShort}
-        
       /> 
       <ProtectedRoute
         component={Profile} 
         path="/profile"
         isLoggedIn={isLoggedIn}
-        onSubmit={handleUpdateUser}
-        onLogout={onLogout} 
+        onCorrect={handleUpdateUser}
+        onLogout={onLogout}
+        currentEmail={currentEmail}
+        currentName={currentName}
       /> 
       <Route path="/signup">
         <Register

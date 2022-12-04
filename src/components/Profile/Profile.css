@@ -85,7 +85,7 @@
     cursor: pointer;
 }
 .error__profile{
-    top:40px;
+    top:60px;
 }
 
 .error__profile-name{
@@ -100,6 +100,10 @@
 
     .profile__input{
         max-width: 260px;
+    }
+
+    .error__profile{
+        width:260px;
     }
 
 }
