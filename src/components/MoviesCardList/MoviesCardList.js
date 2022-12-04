@@ -29,6 +29,7 @@ function MoviesCardList ({movies,isNotSuccessRequest,onMovieLike,moviesSaved,isL
       setMoviesPerPage(moviesPerPage + 3)
     }
   }
+  
 
   React.useEffect(() => {
     window.addEventListener('resize', function(){
@@ -41,7 +42,7 @@ function MoviesCardList ({movies,isNotSuccessRequest,onMovieLike,moviesSaved,isL
       {isNotSuccessRequest ? (
         <ServerError />
       ) :
-      (movies?.length === 0) ? (
+      (sliceMovies.length === 0) ? (
         <p className="elements__notfound">Ничего не найдено</p>
       ):(
               <div className="elements">

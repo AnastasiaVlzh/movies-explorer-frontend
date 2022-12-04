@@ -24,7 +24,6 @@ function App() {
   const [userInfo, setUserInfo] = React.useState('');
   const [isInfoTooltipOpen, setIsInfoTooltipOpen] = React.useState(false);
   const [authMessage, setAuthMessage] = React.useState(false);
-
   const [movies, setMovies] = React.useState(null);
   const [query, setQuery] = React.useState("");
   const [loading, setLoading] = React.useState(false);
@@ -35,6 +34,7 @@ function App() {
   const [filterShortMovies, setFilterShortMovies] = React.useState(true);
   const [checked, setChecked] = React.useState(true);
   const [checkedShort, setCheckedShort] = React.useState(true);
+  //const [isEmptyInput, setIsEmptyInput] = React.useState(false);
   
 
   const history = useHistory();
@@ -122,8 +122,8 @@ function App() {
    }
 
 
-  function handleMoviesSearch(e) {
-    e.preventDefault();
+  function handleMoviesSearch() {
+    //e.preventDefault();
     const localStorageMovies = JSON.parse(localStorage.getItem('movies'));
     if (localStorageMovies === null) {
     moviesApi
@@ -282,6 +282,7 @@ function App() {
       query={query}
       checked={checked}
       setChecked={setChecked}
+      //isEmptyInput={isEmptyInput}
 
       />
       <ProtectedRoute

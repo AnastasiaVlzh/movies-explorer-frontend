@@ -1,11 +1,23 @@
 import { useState } from "react";
 import './SearchForm.css';
 import Button from "../button/button";
-import Input from "../input/input";
 import Checkbox from "../checkbox/checkbox";
 import React from 'react';
+import {useForm} from 'react-hook-form'
 
 function SearchForm (props) {
+
+  const {
+    register,
+    formState:{
+      errors,
+    },
+    handleSubmit,
+
+} = useForm({
+    mode:'all'
+})
+
 
   const [queryShort, setQueryShort] = React.useState('');
 
@@ -21,15 +33,21 @@ function handleInputShort(event){
 
   return (
       <section className="search">
-        <form onSubmit={props.onSubmit} className="search__form">
-            <Input 
-            placeholder= "Фильм"
-            onInputHandler={props.onInput}
-            onInput={!props.isSavedMoviesList? props.onInput : handleInputShort }
-            setInput={!props.isSavedMoviesList? props.query : queryShort}
-            isSavedMoviesList={props.isSavedMoviesList}
+        <form onSubmit={handleSubmit(props.onSubmit)} className="search__form">
+        <div className="search__form_input">
+          <input 
+            type="text" 
+            name="input"
+            id='input'
+            className="search__input"
+            placeholder="Фильм"
+            onInput={!props.isSavedMoviesList? props.onInput : handleInputShort}
+            value={props.query}
+            {...register("input", { required: true })}
             />
-            <Button/>
+            <span className="search__error">{errors?.input && <p className="search__error_text" > {errors?.input.message || "Нужно ввести ключевое слово"}</p>}</span>
+        </div>
+        <Button/>
         </form>
         <Checkbox
         filterMovies={props.filterMovies}

@@ -21,8 +21,7 @@ function Movies(props) {
         query={props.query}
         checked={props.checked}
         setChecked={props.setChecked}
-        // setCheckedShort={props.setCheckedShort}
-        // checkedShort={props.checkedShort}
+
       />
 
       {props.loading ? (

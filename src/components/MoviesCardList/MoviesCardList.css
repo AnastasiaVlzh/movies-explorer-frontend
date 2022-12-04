@@ -17,6 +17,7 @@
 
 .elements__notfound{
     text-align: center;
+    margin-top: 1px;
 }
 
 .loadingButton{
