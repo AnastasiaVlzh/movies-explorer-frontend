@@ -6,6 +6,7 @@ import ServerError from '../ServerError/ServerError'
 const width = window.innerWidth
 
 function MoviesCardList ({movies,isNotSuccessRequest,onMovieLike,moviesSaved,isLikedAndSaved,onMovieDelete,isSavedMoviesList}) {
+  
 
   const [moviesPerPage, setMoviesPerPage] = React.useState(() => {
     if (width < 480){
@@ -19,21 +20,30 @@ function MoviesCardList ({movies,isNotSuccessRequest,onMovieLike,moviesSaved,isL
 
   const sliceMovies = movies?.slice(0,moviesPerPage)
 
-  const loadMore = () => {
+  const handleMovieDisplay = () => {
     const width = window.innerWidth
     if (width < 480){
-      setMoviesPerPage(moviesPerPage + 2)
+      setMoviesPerPage(5)
+    } else if (width < 768){
+      setMoviesPerPage(8)
+    } else if (width > 780){
+      setMoviesPerPage(12)
+    }
+  }
+  
+  const loadMore = () =>{
+    if (width < 480){
+      setMoviesPerPage(moviesPerPage + 1)
     } else if (width < 768){
       setMoviesPerPage(moviesPerPage + 2)
     } else if (width > 780){
       setMoviesPerPage(moviesPerPage + 3)
     }
   }
-  
 
   React.useEffect(() => {
     window.addEventListener('resize', function(){
-      setTimeout (loadMore, 1000);
+      setTimeout (handleMovieDisplay, 100);
     })
   },[])
 
