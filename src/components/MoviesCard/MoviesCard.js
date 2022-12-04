@@ -32,7 +32,7 @@ function MoviesCard ({card,onMovieLike,onMovieDelete,isSavedMoviesList,moviesSav
                 <div className="movie__detail">
                     <h2 className="movie__name">{card.nameRU}</h2>
                     { isSavedMoviesList ? 
-                    ( <button type="button" className = {'movie__delete'} onClick={handleDeleteClick} />)
+                    ( <button type="button" className = 'movie__delete' onClick={handleDeleteClick} />)
                     : 
                     (isLikedAndSaved ? 
                     (  <button type="button" onClick={handleDeleteClick} className = 'movie__like movie__like_active' />)

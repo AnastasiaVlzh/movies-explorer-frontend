@@ -85,18 +85,23 @@
     display: none;
 }
 
-.movie__detail:hover .movie__delete{
-    display: initial;
+@media screen and (max-width:1280px) and (min-width:430px) {
+    .movie__detail:hover .movie__delete{
+        display: initial;
+    }
+
 }
+
 
 @media screen and (max-width:439px){
     .movie__picture{
         width: 300px;
     }
+    .movie__delete{
+        display: initial;
+    }
 
-    /* .movie__detail:hover .movie__delete{
-        background: none;
-    } */
+
 
 
 }

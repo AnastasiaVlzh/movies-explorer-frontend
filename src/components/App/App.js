@@ -132,7 +132,6 @@ function App() {
   }
 
   function handleMoviesSearch() {
-    //e.preventDefault();
     const localStorageMovies = JSON.parse(localStorage.getItem('movies'));
     if (localStorageMovies === null) {
     moviesApi
@@ -158,7 +157,6 @@ function App() {
 const moviesFilter =  React.useCallback((query) => {
     const localStorageMovies = JSON.parse(localStorage.getItem('movies'));
     const localStorageInput = localStorage.getItem('query');
-    //const checkbox = localStorage.getItem('checkbox');
 
 
         if (localStorageMovies) {
@@ -179,9 +177,6 @@ const moviesFilter =  React.useCallback((query) => {
           setQuery(localStorageInput);
         }
 
-        // if(checkbox){
-        //   setChecked(checkbox)
-        // }
 
     }, []);
 
