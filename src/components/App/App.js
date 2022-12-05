@@ -77,6 +77,8 @@ function App() {
         setUserInfo(userData.email );
         setIsLoggedIn(true);
         setСurrentUser(userData);
+        setCurrentName(userData.name)
+        setCurrentEmail(userData.email)
         history.push("/movies");
       })
       .catch((err) => {
