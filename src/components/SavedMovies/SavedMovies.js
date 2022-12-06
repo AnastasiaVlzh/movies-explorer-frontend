@@ -19,6 +19,11 @@ function SavedMovies(props) {
           console.log(err);
         })
 }, [props.moviesSaved]);
+
+
+
+
+
   
   return (
     <section>
@@ -37,10 +42,12 @@ function SavedMovies(props) {
       ) : (
       <MoviesCardList 
         movies={props.filterShortMovies? props.savedMoviesList : filterShortMovies(props.savedMoviesList)}
+        //movies={props.savedMoviesList}
         savedMoviesList={props.savedMoviesList}
         setSavedMoviesList={props.setSavedMoviesList}
         isSavedMoviesList={props.isSavedMoviesList}
         onMovieDelete={props.onMovieDelete}
+        isNotFound={props.isNotFound}
       />
       )}
     </section>

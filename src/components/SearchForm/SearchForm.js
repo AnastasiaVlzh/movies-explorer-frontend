@@ -10,25 +10,15 @@ function SearchForm (props) {
   const {
     register,
     formState:{
-      errors,
+      errors, 
     },
     handleSubmit,
 
 } = useForm({
-    mode:'all'
+    mode:'onSubmit',
+    reValidateMode: 'onSubmit'
 })
 
-
-//   const [queryShort, setQueryShort] = React.useState('');
-
-
-// function onInputHandlerShort(value){
-//   setQueryShort(value);
-// }
-
-// function handleInputShort(event){
-//   onInputHandlerShort(event.target.value)
-// }
 
 
   return (

@@ -28,6 +28,7 @@ function Movies(props) {
         <Preloader />
       ) : (
         <MoviesCardList
+        //movies={props.movies}
         movies={props.filterMovies? props.movies : filterShortMovies(props.movies)}  
         loading={props.loading}
         setLoading={props.setLoading}
@@ -36,7 +37,7 @@ function Movies(props) {
         onMovieDelete={props.onMovieDelete}
         moviesSaved={props.moviesSaved}
         isLikedAndSaved={props.isLikedAndSaved}
-
+        isNotFound={props.isNotFound}
       />
       )}
     </section>

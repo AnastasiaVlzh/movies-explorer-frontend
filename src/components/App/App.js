@@ -32,11 +32,13 @@ function App() {
   const [isNotSuccessRequest, setIsNotSuccessRequest] = React.useState(false);
   const [moviesSaved, setMoviesSaved] = React.useState([]);
   const [savedMoviesList, setSavedMoviesList] = React.useState([]);
-  const [filterMovies, setFilterMovies] = React.useState(true);
+  const [filterMovies, setFilterMovies] = React.useState(false);
   const [filterShortMovies, setFilterShortMovies] = React.useState(true);
   const [checked, setChecked] = React.useState(true);
   const [checkedShort, setCheckedShort] = React.useState(true);
   const [queryShort, setQueryShort] = React.useState('');
+  const [isNotFound, setIsNotFound] = React.useState(false);
+  const [isSavedMoviesNoFound, setIsSavedMoviesNoFound] = React.useState(false);
   
 
   const history = useHistory();
@@ -66,6 +68,7 @@ function App() {
       .authorize(data)
       .then((res) => {
         setIsLoggedIn(true);
+        setChecked(true)
       })
       .catch((err) => console.log(err));
   }
@@ -80,6 +83,7 @@ function App() {
         setCurrentName(userData.name)
         setCurrentEmail(userData.email)
         history.push("/movies");
+        //setChecked(true)
       })
       .catch((err) => {
         console.log(err)
@@ -120,7 +124,11 @@ function App() {
         setUserInfo('');
         console.log(userInfo)
         history.push('/signin');
-        localStorage.clear()
+        localStorage.clear();
+        setFilterMovies(true);
+        setChecked(true);
+        setQuery('')
+        setIsNotFound(false)
       })
       .catch((err) => console.log(err));
   }
@@ -141,7 +149,8 @@ function App() {
     .then((res) => {
       setLoading(true)
       localStorage.setItem('movies', JSON.stringify(res));;
-      setMovies(res.filter(item =>item.nameRU.toLowerCase().includes(query.toLowerCase())))
+      //setMovies(res.filter(item =>item.nameRU.toLowerCase().includes(query.toLowerCase())))
+      moviesFilter(query)
       localStorage.setItem('query',query);
     })
     .catch((err) => {
@@ -151,36 +160,45 @@ function App() {
   } else {
     setMovies(localStorageMovies.filter(item =>item.nameRU.toLowerCase().includes(query.toLowerCase())))
     localStorage.setItem('query',query);
-  }
+  } 
+
+
 }
 
 
 
 const moviesFilter =  React.useCallback((query) => {
-    const localStorageMovies = JSON.parse(localStorage.getItem('movies'));
-    const localStorageInput = localStorage.getItem('query');
+  const localStorageMovies = JSON.parse(localStorage.getItem('movies'));
+  const localStorageInput = localStorage.getItem('query');
+  const filterByQuery = (item) => {
+          return JSON.stringify(item.nameRU)
+            .toLowerCase().includes(query.toLowerCase());
+        };
+  const moviesArray = localStorageMovies.filter(filterByQuery);
 
+      if (localStorageMovies) {
 
-        if (localStorageMovies) {
+        setMovies(moviesArray);
+        localStorage.setItem('filterdcards', JSON.stringify(moviesArray));
+        localStorage.setItem('query', query);
 
-          const filterByQuery = (item) => {
-            return JSON.stringify(item.nameRU)
-              .toLowerCase().includes(query.toLowerCase());
-          };
-
-          const moviesArray = localStorageMovies.filter(filterByQuery);
-
-          setMovies(moviesArray);
-          localStorage.setItem('filterdcards', JSON.stringify(moviesArray));
-          localStorage.setItem('query', query);
-          }
-
-        if (localStorageInput) {
-          setQuery(localStorageInput);
+        } else {
+          setIsNotFound(true)
         }
+        
+
+      if (localStorageInput) {
+        setQuery(localStorageInput);
+      }
 
 
+  }, []);
+
+    React.useEffect(() => {
+      const checkbox = localStorage.getItem('checkbox');
+      setChecked(JSON.parse(checkbox));
     }, []);
+
 
     React.useEffect(() => {
       const localStorageInput = localStorage.getItem('query');;
@@ -238,6 +256,7 @@ const moviesFilter =  React.useCallback((query) => {
       React.useEffect(() => {
         if (!isSavedMoviesList) {
           setSavedMoviesList(moviesSaved);
+          setIsSavedMoviesNoFound(false)
         }
       }, [savedMoviesList, moviesSaved]);
 
@@ -247,6 +266,8 @@ const moviesFilter =  React.useCallback((query) => {
         const savedMoviesArray = moviesSaved.filter(item =>item.nameRU.toLowerCase().includes(queryShort.toLowerCase()))
         setSavedMoviesList(savedMoviesArray);
       }
+
+
 
       function handleFilterMovies() {
         setFilterMovies(!filterMovies);
@@ -261,12 +282,19 @@ const moviesFilter =  React.useCallback((query) => {
     function handleFilterShortMovies() {
       setFilterShortMovies(!filterShortMovies);
 
+      if (savedMoviesList.length === 0 ) {
+        setIsSavedMoviesNoFound(true);
+      } else {
+        setIsSavedMoviesNoFound(false);
+      };
     }
 
     function handleSwitchCheckboxShortMovies() {
       setCheckedShort(!checkedShort);
       handleFilterShortMovies(checkedShort);
-  }
+    }
+
+ 
 
     React.useEffect(() => {
       const checkbox = localStorage.getItem('checkbox');
@@ -276,7 +304,12 @@ const moviesFilter =  React.useCallback((query) => {
     React.useEffect(() => {
       setChecked(filterMovies);
   
-  }, [filterMovies]);
+    }, [filterMovies]);
+
+  React.useEffect(() => {
+    setCheckedShort(filterShortMovies);
+
+  }, [filterShortMovies]);
 
 
       function closePopups(){
@@ -313,7 +346,7 @@ const moviesFilter =  React.useCallback((query) => {
       query={query}
       checked={checked}
       setChecked={setChecked}
-
+      isNotFound={isNotFound}
       />
       <ProtectedRoute
         component={SavedMovies} 
@@ -333,6 +366,7 @@ const moviesFilter =  React.useCallback((query) => {
         setChecked={setCheckedShort}
         query={queryShort}
         onInput={onInputHandlerShort}
+        isNotFound={isSavedMoviesNoFound}
       /> 
       <ProtectedRoute
         component={Profile} 

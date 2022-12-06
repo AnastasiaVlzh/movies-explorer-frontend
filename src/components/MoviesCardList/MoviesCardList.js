@@ -5,7 +5,7 @@ import ServerError from '../ServerError/ServerError'
 
 const width = window.innerWidth
 
-function MoviesCardList ({movies,isNotSuccessRequest,onMovieLike,moviesSaved,isLikedAndSaved,onMovieDelete,isSavedMoviesList}) {
+function MoviesCardList ({movies,isNotSuccessRequest,onMovieLike,moviesSaved,isLikedAndSaved,onMovieDelete,isSavedMoviesList,isNotFound}) {
   
 
   const [moviesPerPage, setMoviesPerPage] = React.useState(() => {
@@ -47,14 +47,19 @@ function MoviesCardList ({movies,isNotSuccessRequest,onMovieLike,moviesSaved,isL
     })
   },[])
 
+
+
+
   return (
       <section className="elements__container">
       {isNotSuccessRequest ? (
         <ServerError />
       ) :
-      (sliceMovies.length === 0) ? (
+      isNotFound ? (
         <p className="elements__notfound">Ничего не найдено</p>
-      ):(
+      )
+      :
+      (
               <div className="elements">
             {sliceMovies?.map((item) => {
             return (
@@ -74,7 +79,8 @@ function MoviesCardList ({movies,isNotSuccessRequest,onMovieLike,moviesSaved,isL
             );
           })}
       </div>
-      )}
+      )
+      }
         <div className="loadingButton" >
         {moviesPerPage < movies?.length &&
             <button onClick={() => loadMore()} className="loadingButton__button" type="button">Ещё</button>
