@@ -12,7 +12,7 @@ function Checkbox(props) {
           type="checkbox"
           name="filter"
           id="filter"
-          checked={props.checked}
+          checked={props.checked || false}
           onChange={props.handleFilter}
         />
         <span className="filter__style"></span>

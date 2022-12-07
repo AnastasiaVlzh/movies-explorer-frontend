@@ -10,6 +10,8 @@ function SavedMovies(props) {
 
   const filterShortMovies = (moviesForFilter) => moviesForFilter.filter((item) => item.duration <= 40);
 
+
+
   React.useEffect(() => {
     MainApi.getSavedMovies()
         .then((data) => {
@@ -21,6 +23,23 @@ function SavedMovies(props) {
 }, [props.moviesSaved]);
 
 
+// const filterSavedShort = React.useCallback(() => {
+//   if (!props.checked) {
+//     const filter = props.moviesSaved.filter((m) => m.duration <= 40);
+//     props.setSavedMoviesList(filter);
+//   } else {
+//     props.setSavedMoviesList(props.moviesSaved);
+//   }
+// }, [props.checked, props.moviesSaved]);
+
+// React.useEffect(() => {
+//   if (filterShortMovies.length === 0) {
+//     props.setIsNotFound(true)
+//       } else {
+//     props.setIsNotFound(false)
+//     };
+  
+// }, []);
 
 
 
@@ -41,9 +60,10 @@ function SavedMovies(props) {
         <Preloader />
       ) : (
       <MoviesCardList 
-        movies={props.filterShortMovies? props.savedMoviesList : filterShortMovies(props.savedMoviesList)}
-        //movies={props.savedMoviesList}
+        //movies={props.filterShortMovies? props.savedMoviesList : filterShortMovies(props.savedMoviesList)}
+        movies={props.filterShortMovies? props.movies : filterShortMovies(props.movies)}
         savedMoviesList={props.savedMoviesList}
+        //movies={props.movies}
         setSavedMoviesList={props.setSavedMoviesList}
         isSavedMoviesList={props.isSavedMoviesList}
         onMovieDelete={props.onMovieDelete}

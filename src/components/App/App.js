@@ -40,6 +40,7 @@ function App() {
   const [isNotFound, setIsNotFound] = React.useState(false);
   const [isSavedMoviesNoFound, setIsSavedMoviesNoFound] = React.useState(false);
   
+  
 
   const history = useHistory();
   const location = useLocation();
@@ -282,12 +283,42 @@ const moviesFilter =  React.useCallback((query) => {
 
 
     
-      function onSubmitSavedMoviesHandler(data) {
+      function onSubmitSavedMoviesHandler(value) {
+  
         const savedMoviesArray = moviesSaved.filter(item =>item.nameRU.toLowerCase().includes(queryShort.toLowerCase()))
         setSavedMoviesList(savedMoviesArray);
+
+        const filterShortMovies = (item) => {
+          return item.duration <= 40;
+        };
+    
+        if (savedMoviesArray.length === 0) {
+          setIsSavedMoviesNoFound(true)
+        } else {
+          setIsSavedMoviesNoFound(false)
+        };
+
+        // if (savedMoviesArray.filter(filterShortMovies).length === 0) {
+        //   setIsSavedMoviesNoFound(true)
+        // } else {
+        //   setIsSavedMoviesNoFound(false)
+        // };
+
+        if (!checkedShort) {
+          //return savedMoviesArray.filter(filterShortMovies);
+
+          if (savedMoviesArray.filter(filterShortMovies).length === 0 || null) {
+            setIsSavedMoviesNoFound(true)
+          } else {
+            setIsSavedMoviesNoFound(false)
+          };
+        } else {
+          return savedMoviesArray;
+        }
+
       }
 
-
+    
 
       function handleFilterMovies() {
         setFilterMovies(!filterMovies);
@@ -302,11 +333,6 @@ const moviesFilter =  React.useCallback((query) => {
     function handleFilterShortMovies() {
       setFilterShortMovies(!filterShortMovies);
 
-      if (savedMoviesList.length === 0 ) {
-        setIsSavedMoviesNoFound(true);
-      } else {
-        setIsSavedMoviesNoFound(false);
-      };
     }
 
     function handleSwitchCheckboxShortMovies() {
@@ -372,7 +398,7 @@ const moviesFilter =  React.useCallback((query) => {
         component={SavedMovies} 
         path="/saved-movies"
         isLoggedIn={isLoggedIn}
-        savedMoviesList={savedMoviesList}
+        movies={savedMoviesList}
         setSavedMoviesList={setSavedMoviesList}
         isSavedMoviesList={isSavedMoviesList}
         loading={loading}
@@ -387,6 +413,7 @@ const moviesFilter =  React.useCallback((query) => {
         query={queryShort}
         onInput={onInputHandlerShort}
         isNotFound={isSavedMoviesNoFound}
+        setIsNotFound={setIsSavedMoviesNoFound}
       /> 
       <ProtectedRoute
         component={Profile} 

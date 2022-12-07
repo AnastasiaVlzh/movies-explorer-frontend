@@ -3,50 +3,43 @@ import MoviesCard from '../MoviesCard/MoviesCard';
 import React from 'react';
 import ServerError from '../ServerError/ServerError'
 
-const width = window.innerWidth
 
 function MoviesCardList ({movies,isNotSuccessRequest,onMovieLike,moviesSaved,isLikedAndSaved,onMovieDelete,isSavedMoviesList,isNotFound}) {
   
 
-  const [moviesPerPage, setMoviesPerPage] = React.useState(() => {
-    if (width < 480){
-      return 5
-    } else if (width < 768){
-      return 8
-    } else if (width > 780){
-      return 12
-    }
-  });
+  const [moviesPerPage, setMoviesPerPage] = React.useState(12);
+  const [moviesAddToPage, setMoviesAddToPage] = React.useState(3);
 
-  const sliceMovies = movies?.slice(0,moviesPerPage)
+  const sliceMovies = movies.slice(0,moviesPerPage)
 
-  const handleMovieDisplay = () => {
-    const width = window.innerWidth
-    if (width < 480){
-      setMoviesPerPage(5)
-    } else if (width < 768){
-      setMoviesPerPage(8)
-    } else if (width > 780){
-      setMoviesPerPage(12)
+  const checkWindowWidth = () => {
+    const screenWidth = window.screen.width;
+
+    if (screenWidth >= 1280) {
+      setMoviesPerPage(12);
+      setMoviesAddToPage(3);
+    } else if (screenWidth < 1280 && screenWidth > 761) {
+      setMoviesPerPage(8);
+      setMoviesAddToPage(2);
+    } else {
+      setMoviesPerPage(5);
+      setMoviesAddToPage(1);
     }
-  }
-  
-  const loadMore = () =>{
-    if (width < 480){
-      setMoviesPerPage(moviesPerPage + 1)
-    } else if (width < 768){
-      setMoviesPerPage(moviesPerPage + 2)
-    } else if (width > 780){
-      setMoviesPerPage(moviesPerPage + 3)
-    }
-  }
+  };
+
+
+  const loadMore = () => {
+    setMoviesPerPage(moviesPerPage + moviesAddToPage);
+  };
 
   React.useEffect(() => {
-    window.addEventListener('resize', function(){
-      setTimeout (handleMovieDisplay, 100);
-    })
-  },[])
+    checkWindowWidth();
+  }, [movies]);
 
+
+  window.onresize = (event) => {
+    setTimeout(checkWindowWidth, 50);
+  };
 
 
 
@@ -61,7 +54,7 @@ function MoviesCardList ({movies,isNotSuccessRequest,onMovieLike,moviesSaved,isL
       :
       (
               <div className="elements">
-            {sliceMovies?.map((item) => {
+            {sliceMovies.map((item) => {
             return (
               <MoviesCard
                 card={item}
@@ -82,7 +75,7 @@ function MoviesCardList ({movies,isNotSuccessRequest,onMovieLike,moviesSaved,isL
       )
       }
         <div className="loadingButton" >
-        {moviesPerPage < movies?.length &&
+        {moviesPerPage < movies.length &&
             <button onClick={() => loadMore()} className="loadingButton__button" type="button">Ещё</button>
         }
         </div>
