@@ -9,7 +9,7 @@ import { CurrentUserContext } from '../../contexts/CurrentUserContext'
 
 function Movies(props) {
 
-  const filterShortMovies = (moviesForFilter) => moviesForFilter.filter((item) => item.duration <= 40);
+  //const filterShortMovies = (moviesForFilter) => moviesForFilter.filter((item) => item.duration <= 40);
   
   return (
     <section>
@@ -28,8 +28,8 @@ function Movies(props) {
         <Preloader />
       ) : (
         <MoviesCardList
-        //movies={props.movies}
-        movies={props.filterMovies? props.movies : filterShortMovies(props.movies)}  
+        movies={props.movies}
+        //movies={props.filterMovies? props.movies : filterShortMovies(props.movies)}  
         loading={props.loading}
         setLoading={props.setLoading}
         isNotSuccessRequest={props.isNotSuccessRequest}

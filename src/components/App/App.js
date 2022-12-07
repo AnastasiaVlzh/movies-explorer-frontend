@@ -149,7 +149,7 @@ function App() {
     .then((res) => {
       setLoading(true)
       localStorage.setItem('movies', JSON.stringify(res));;
-      //setMovies(res.filter(item =>item.nameRU.toLowerCase().includes(query.toLowerCase())))
+      setMovies(res.filter(item =>item.nameRU.toLowerCase().includes(query.toLowerCase())))
       moviesFilter(query)
       localStorage.setItem('query',query);
     })
@@ -158,41 +158,60 @@ function App() {
     })
     .finally(() => setLoading(false));
   } else {
-    setMovies(localStorageMovies.filter(item =>item.nameRU.toLowerCase().includes(query.toLowerCase())))
+    // setMovies(localStorageMovies.filter(item =>item.nameRU.toLowerCase().includes(query.toLowerCase())))
     localStorage.setItem('query',query);
+    moviesFilter(query)
   } 
-
-
 }
-
 
 
 const moviesFilter =  React.useCallback((query) => {
   const localStorageMovies = JSON.parse(localStorage.getItem('movies'));
   const localStorageInput = localStorage.getItem('query');
-  const filterByQuery = (item) => {
+
+
+      if (localStorageMovies) {
+
+        const filterByQuery = (item) => {
           return JSON.stringify(item.nameRU)
             .toLowerCase().includes(query.toLowerCase());
         };
-  const moviesArray = localStorageMovies.filter(filterByQuery);
 
-      if (localStorageMovies) {
+        const moviesArray = localStorageMovies.filter(filterByQuery);
 
         setMovies(moviesArray);
         localStorage.setItem('filterdcards', JSON.stringify(moviesArray));
         localStorage.setItem('query', query);
 
-        } else {
-          setIsNotFound(true)
+        if (moviesArray.length === 0){
+        setIsNotFound(true)
+        }else{
+        setIsNotFound(false)
         }
-        
+
+        const filterByTime = (i) => {
+          return i.duration <= 40;
+        };
+  
+        if (!checked) {
+          const filterShort = moviesArray.filter(filterByTime);
+          setMovies(filterShort);
+          if (filterShort.length === 0) {
+            setIsNotFound(true)
+          } else {
+            setIsNotFound(false)
+          };
+        }
+
+        }
 
       if (localStorageInput) {
         setQuery(localStorageInput);
       }
 
 
-  }, []);
+  }, [checked]);
+
 
     React.useEffect(() => {
       const checkbox = localStorage.getItem('checkbox');
@@ -204,6 +223,7 @@ const moviesFilter =  React.useCallback((query) => {
       const localStorageInput = localStorage.getItem('query');;
       moviesFilter(localStorageInput);
     }, [moviesFilter, checked]);
+
 
 
   function handleMoveLike(data) {       
