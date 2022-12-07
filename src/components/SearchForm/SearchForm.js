@@ -37,7 +37,7 @@ function SearchForm (props) {
             />
             <span className="search__error">{errors?.input && <p className="search__error_text" > {errors?.input.message || "Нужно ввести ключевое слово"}</p>}</span>
         </div>
-        <Button/>
+        <Button />
         </form>
         <Checkbox
         filterMovies={props.filterMovies}

@@ -6,31 +6,30 @@ import ServerError from '../ServerError/ServerError'
 
 function MoviesCardList ({movies,isNotSuccessRequest,onMovieLike,moviesSaved,isLikedAndSaved,onMovieDelete,isSavedMoviesList,isNotFound}) {
   
+  const [moviesPerPage, setMoviesPerPage] = React.useState(0);
+  const [moviesAddToPage, setMoviesAddToPage] = React.useState(0)
 
-  const [moviesPerPage, setMoviesPerPage] = React.useState(12);
-  const [moviesAddToPage, setMoviesAddToPage] = React.useState(3);
-
-  const sliceMovies = movies.slice(0,moviesPerPage)
 
   const checkWindowWidth = () => {
-    const screenWidth = window.screen.width;
+    const screenWidth = window.innerWidth;
 
-    if (screenWidth >= 1280) {
+    if (screenWidth >= 1101) {
       setMoviesPerPage(12);
       setMoviesAddToPage(3);
-    } else if (screenWidth < 1280 && screenWidth > 761) {
+    } else if (screenWidth < 1100 && screenWidth > 750) {
       setMoviesPerPage(8);
       setMoviesAddToPage(2);
-    } else {
+    } else if (screenWidth < 749) {
       setMoviesPerPage(5);
       setMoviesAddToPage(1);
     }
   };
 
 
-  const loadMore = () => {
-    setMoviesPerPage(moviesPerPage + moviesAddToPage);
+  function loadMore() {
+    setMoviesPerPage((moviesPerPage) => moviesPerPage + moviesAddToPage)
   };
+
 
   React.useEffect(() => {
     checkWindowWidth();
@@ -40,7 +39,6 @@ function MoviesCardList ({movies,isNotSuccessRequest,onMovieLike,moviesSaved,isL
   window.onresize = (event) => {
     setTimeout(checkWindowWidth, 50);
   };
-
 
 
   return (
@@ -54,7 +52,7 @@ function MoviesCardList ({movies,isNotSuccessRequest,onMovieLike,moviesSaved,isL
       :
       (
               <div className="elements">
-            {sliceMovies.map((item) => {
+            {movies.slice(0,moviesPerPage).map((item) => {
             return (
               <MoviesCard
                 card={item}

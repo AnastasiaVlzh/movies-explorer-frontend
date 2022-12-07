@@ -23,26 +23,6 @@ function SavedMovies(props) {
 }, [props.moviesSaved]);
 
 
-// const filterSavedShort = React.useCallback(() => {
-//   if (!props.checked) {
-//     const filter = props.moviesSaved.filter((m) => m.duration <= 40);
-//     props.setSavedMoviesList(filter);
-//   } else {
-//     props.setSavedMoviesList(props.moviesSaved);
-//   }
-// }, [props.checked, props.moviesSaved]);
-
-// React.useEffect(() => {
-//   if (filterShortMovies.length === 0) {
-//     props.setIsNotFound(true)
-//       } else {
-//     props.setIsNotFound(false)
-//     };
-  
-// }, []);
-
-
-
   
   return (
     <section>

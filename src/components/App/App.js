@@ -26,7 +26,7 @@ function App() {
   const [userInfo, setUserInfo] = React.useState('');
   const [isInfoTooltipOpen, setIsInfoTooltipOpen] = React.useState(false);
   const [authMessage, setAuthMessage] = React.useState(false);
-  const [movies, setMovies] = React.useState(null);
+  const [movies, setMovies] = React.useState([]);
   const [query, setQuery] = React.useState("");
   const [loading, setLoading] = React.useState(false);
   const [isNotSuccessRequest, setIsNotSuccessRequest] = React.useState(false);
@@ -170,7 +170,6 @@ const moviesFilter =  React.useCallback((query) => {
   const localStorageMovies = JSON.parse(localStorage.getItem('movies'));
   const localStorageInput = localStorage.getItem('query');
 
-
       if (localStorageMovies) {
 
         const filterByQuery = (item) => {
@@ -203,7 +202,6 @@ const moviesFilter =  React.useCallback((query) => {
             setIsNotFound(false)
           };
         }
-
         }
 
       if (localStorageInput) {
@@ -250,7 +248,8 @@ const moviesFilter =  React.useCallback((query) => {
     const card = !!data._id ? data : moviesSaved.find((movie) => data.id === movie.movieId);
     MainApi.deleteSavedMovie(card._id)
     .then(() => {
-      setMoviesSaved(moviesSaved.filter(c => c._id !== card._id));
+      setMoviesSaved(moviesSaved.filter(c => c._id !== card._id))
+      //setMoviesSaved(moviesSaved.filter(item =>item.nameRU.toLowerCase().includes(query.toLowerCase())))
     })
     .catch(err => {
       console.log(err);
@@ -278,43 +277,22 @@ const moviesFilter =  React.useCallback((query) => {
         if (!isSavedMoviesList) {
           setSavedMoviesList(moviesSaved);
           setIsSavedMoviesNoFound(false)
+          setQueryShort('')
         }
-      }, [savedMoviesList, moviesSaved]);
+      }, [savedMoviesList, moviesSaved,isSavedMoviesList]);
 
 
     
-      function onSubmitSavedMoviesHandler(value) {
+      function onSubmitSavedMoviesHandler() {
   
         const savedMoviesArray = moviesSaved.filter(item =>item.nameRU.toLowerCase().includes(queryShort.toLowerCase()))
         setSavedMoviesList(savedMoviesArray);
-
-        const filterShortMovies = (item) => {
-          return item.duration <= 40;
-        };
     
         if (savedMoviesArray.length === 0) {
           setIsSavedMoviesNoFound(true)
         } else {
           setIsSavedMoviesNoFound(false)
         };
-
-        // if (savedMoviesArray.filter(filterShortMovies).length === 0) {
-        //   setIsSavedMoviesNoFound(true)
-        // } else {
-        //   setIsSavedMoviesNoFound(false)
-        // };
-
-        if (!checkedShort) {
-          //return savedMoviesArray.filter(filterShortMovies);
-
-          if (savedMoviesArray.filter(filterShortMovies).length === 0 || null) {
-            setIsSavedMoviesNoFound(true)
-          } else {
-            setIsSavedMoviesNoFound(false)
-          };
-        } else {
-          return savedMoviesArray;
-        }
 
       }
 
@@ -328,16 +306,34 @@ const moviesFilter =  React.useCallback((query) => {
       function handleSwitchCheckbox() {
         setChecked(!checked);
         handleFilterMovies(checked);
-    }
+      }
 
-    function handleFilterShortMovies() {
-      setFilterShortMovies(!filterShortMovies);
+      function handleFilterShortMovies() {
+        setFilterShortMovies(!filterShortMovies);
 
-    }
+      }
 
     function handleSwitchCheckboxShortMovies() {
       setCheckedShort(!checkedShort);
-      handleFilterShortMovies(checkedShort);
+      handleFilterShortMovies(!checkedShort);
+      
+      const filterShortMovies = (item) => {
+        return item.duration <= 40;
+      };
+
+      const savedMoviesArray = moviesSaved.filter(item =>item.nameRU.toLowerCase().includes(queryShort.toLowerCase()))
+
+      if (checkedShort) {
+        if (savedMoviesArray.filter(filterShortMovies).length === 0 || null) {
+          setIsSavedMoviesNoFound(true)
+        }
+      } 
+
+      else  {
+        setSavedMoviesList(savedMoviesArray);
+        setIsSavedMoviesNoFound(false)
+      }
+
     }
 
  
@@ -352,10 +348,10 @@ const moviesFilter =  React.useCallback((query) => {
   
     }, [filterMovies]);
 
-  React.useEffect(() => {
-    setCheckedShort(filterShortMovies);
+    // React.useEffect(() => {
+    // setCheckedShort(filterShortMovies);
 
-  }, [filterShortMovies]);
+    // }, [filterShortMovies]);
 
 
       function closePopups(){
