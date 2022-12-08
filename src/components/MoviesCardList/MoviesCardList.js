@@ -21,7 +21,7 @@ function MoviesCardList ({movies,isNotSuccessRequest,onMovieLike,moviesSaved,isL
       setMoviesAddToPage(2);
     } else if (screenWidth < 749) {
       setMoviesPerPage(5);
-      setMoviesAddToPage(1);
+      setMoviesAddToPage(2);
     }
   };
 
