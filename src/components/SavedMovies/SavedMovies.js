@@ -19,8 +19,8 @@ function SavedMovies(props) {
             if(props.query.length > 0 && savedMoviesArray.length === 0 ){
               props.setSavedMoviesList(savedMoviesArray)
               props.setIsNotFound(true)
-            }
-
+            } else if(props.query.length > 0 && savedMoviesArray.length > 0 )
+              props.setSavedMoviesList(savedMoviesArray)
         })
         .catch(err => {
           console.log(err);
