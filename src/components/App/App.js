@@ -159,7 +159,6 @@ function App() {
     })
     .finally(() => setLoading(false));
   } else {
-    // setMovies(localStorageMovies.filter(item =>item.nameRU.toLowerCase().includes(query.toLowerCase())))
     localStorage.setItem('query',query);
     moviesFilter(query)
   } 
@@ -249,7 +248,6 @@ const moviesFilter =  React.useCallback((query) => {
     MainApi.deleteSavedMovie(card._id)
     .then(() => {
       setMoviesSaved(moviesSaved.filter(c => c._id !== card._id))
-      //setMoviesSaved(moviesSaved.filter(item =>item.nameRU.toLowerCase().includes(query.toLowerCase())))
     })
     .catch(err => {
       console.log(err);
@@ -280,6 +278,7 @@ const moviesFilter =  React.useCallback((query) => {
           setQueryShort('')
         }
       }, [savedMoviesList, moviesSaved,isSavedMoviesList]);
+
 
 
     

@@ -99,8 +99,13 @@
     }
     .movie__delete{
         display: initial;
-        width: 13px;
-        height: 13px;
+        width: 15px;
+        height: 15px;
+        margin-right: 10px;
+        padding: 0;
+    }
+    .movie__name{
+        width: 240px;
     }
 
 

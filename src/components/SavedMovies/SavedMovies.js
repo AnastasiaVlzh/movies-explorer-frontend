@@ -9,13 +9,18 @@ import Preloader from '../Preloader/Preloader'
 function SavedMovies(props) {
 
   const filterShortMovies = (moviesForFilter) => moviesForFilter.filter((item) => item.duration <= 40);
-
+  const savedMoviesArray = props.moviesSaved.filter(item =>item.nameRU.toLowerCase().includes(props.query.toLowerCase()))
 
 
   React.useEffect(() => {
     MainApi.getSavedMovies()
         .then((data) => {
             props.setSavedMoviesList(data);
+            if(props.query.length > 0 && savedMoviesArray.length === 0 ){
+              props.setSavedMoviesList(savedMoviesArray)
+              props.setIsNotFound(true)
+            }
+
         })
         .catch(err => {
           console.log(err);
