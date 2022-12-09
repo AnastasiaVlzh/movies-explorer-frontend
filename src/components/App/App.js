@@ -147,10 +147,11 @@ function App() {
   function handleMoviesSearch() {
     const localStorageMovies = JSON.parse(localStorage.getItem('movies'));
     if (localStorageMovies === null) {
+    setLoading(true)
     moviesApi
     .getMovies()
     .then((res) => {
-      setLoading(true)
+      //setLoading(true)
       localStorage.setItem('movies', JSON.stringify(res));;
       setMovies(res.filter(item =>item.nameRU.toLowerCase().includes(query.toLowerCase())))
       moviesFilter(query)
