@@ -34,14 +34,7 @@ function App() {
   const [savedMoviesList, setSavedMoviesList] = React.useState([]);
   const [filterMovies, setFilterMovies] = React.useState(false);
   const [filterShortMovies, setFilterShortMovies] = React.useState(true);
-
-  // const checkboxStatus = () => {
-  //   const userCheckboxStatus = localStorage.getItem('checkbox');
-  //   return userCheckboxStatus ? userCheckboxStatus : true;
-  // };
-
   const [checked, setChecked] = React.useState(true);
-
   const [checkedShort, setCheckedShort] = React.useState(true);
   const [queryShort, setQueryShort] = React.useState('');
   const [isNotFound, setIsNotFound] = React.useState(false);
@@ -209,7 +202,6 @@ const moviesFilter =  React.useCallback((query) => {
             setIsNotFound(true)
           } else {
             setIsNotFound(false)
-            console.log("checkbox")
           };
         }
         }
@@ -230,7 +222,6 @@ const moviesFilter =  React.useCallback((query) => {
         setChecked(true)
       }
 
-      console.log("checkbox")
     }, []);
 
 
