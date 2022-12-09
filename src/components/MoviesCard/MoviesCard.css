@@ -87,7 +87,7 @@
 }
 
 @media screen and (max-width:1280px) and (min-width:320px) {
-    .movie__detail:hover .movie__delete{
+    .movie:hover .movie__delete{
         display: block;
     }
 
