@@ -45,10 +45,8 @@ function SavedMovies(props) {
         <Preloader />
       ) : (
       <MoviesCardList 
-        //movies={props.filterShortMovies? props.savedMoviesList : filterShortMovies(props.savedMoviesList)}
         movies={props.filterShortMovies? props.movies : filterShortMovies(props.movies)}
         savedMoviesList={props.savedMoviesList}
-        //movies={props.movies}
         setSavedMoviesList={props.setSavedMoviesList}
         isSavedMoviesList={props.isSavedMoviesList}
         onMovieDelete={props.onMovieDelete}

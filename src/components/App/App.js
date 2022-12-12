@@ -151,7 +151,6 @@ function App() {
     moviesApi
     .getMovies()
     .then((res) => {
-      //setLoading(true)
       localStorage.setItem('movies', JSON.stringify(res));;
       setMovies(res.filter(item =>item.nameRU.toLowerCase().includes(query.toLowerCase())))
       moviesFilter(query)
