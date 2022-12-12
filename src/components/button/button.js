@@ -1,11 +1,12 @@
 import './button.css';
 
-function Button() {
+function Button(props) {
+
+
   return (
     <button 
-    type="button" 
+    type="submit" 
     className="search__button"
- 
     alt="Кнопка поиска"
     />
   );

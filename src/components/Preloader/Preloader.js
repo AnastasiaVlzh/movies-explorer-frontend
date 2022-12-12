@@ -1,12 +1,15 @@
 import './Preloader.css';
 
-function Preloader () {
-    return (
-            <div className="preloader" >
-                <button className="preloader__button" type="button">Ещё</button>
-            </div>
 
-      );
-};
+function Preloader() {
+        return(
+        <section className='preloader'>
+             <div className="lds-dual-ring">
+            </div>
+        </section>
+
+        );
+
+}
 
 export default Preloader;

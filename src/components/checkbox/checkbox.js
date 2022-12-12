@@ -1,8 +1,8 @@
 import './checkbox.css';
 import React from 'react';
 
-function Checkbox() {
-  const [checked, setChecked] = React.useState(false);
+function Checkbox(props) {
+
 
   return (
     <div className="filter">
@@ -12,12 +12,13 @@ function Checkbox() {
           type="checkbox"
           name="filter"
           id="filter"
-          checked={checked}
-          onChange={() => setChecked(!checked)}
+          checked={props.checked || false}
+          onChange={props.handleFilter}
         />
         <span className="filter__style"></span>
         <span className="filter__text">Короткометражки</span>
       </label>
+
     </div>
   );
 };

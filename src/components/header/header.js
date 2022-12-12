@@ -6,7 +6,7 @@ import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import MobileMenu from '../MobileMenu/MobileMenu';
 
-function Header() {
+function Header(props) {
   let location = useLocation();
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
@@ -35,12 +35,19 @@ function Header() {
           <img className="header__logo" src={headerLogo} alt="Логотип страницы" />
         </Link>
         <nav>
-        {location.pathname === '/' ? 
-        <HeaderMainNav /> : 
-        <HeaderFilmNav 
-          onMobileMenu={handleMobileMenuClick}
-        />}
-        </nav>
+       {location.pathname === '/' ?
+       ( !props.isLoggedIn ?
+         (<HeaderMainNav />) :
+         (<HeaderFilmNav
+           onMobileMenu={handleMobileMenuClick}
+         />)
+       )
+           :
+       (<HeaderFilmNav
+         onMobileMenu={handleMobileMenuClick}
+       />)
+       }
+       </nav>
         <MobileMenu
           isOpen={isMobileMenuOpen} 
           onClose={closeMenu}

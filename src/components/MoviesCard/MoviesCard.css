@@ -47,14 +47,18 @@
     border: none;
     background-color: #FFFFFF;
     transition: ease-in 0.6s;
-    margin-right: 16px;
+    
     cursor: pointer;
+    padding: 0px;
 }
 .movie__like:hover{
     opacity: 0.5;
 }
 .movie__like_active{
-    color: #EE3465;
+    background-image: url(../../images/Like_red.svg);
+    padding: 0;
+    margin: 0;
+    margin-top: 15px;
 }
 
 .movie__time{
@@ -65,7 +69,7 @@
     line-height: 13px;
     white-space: nowrap;
     overflow: hidden;
-    max-width: 37px;
+    max-width: 40px;
     margin-left: 16px;
     margin-top: 7px;
 }
@@ -73,21 +77,39 @@
 .movie__delete{
     background: url(../../images/movie-delete.svg) no-repeat;
     border: none;
-    width: 6px;
+    width: 7px;
     height: 7px;
     transition: ease-in 0.6s;
     margin-right: 16px;
     cursor: pointer;
     display: none;
+    padding: 0;
 }
 
-.movie__detail:hover .movie__delete{
-    display: initial;
+@media screen and (max-width:2000px) and (min-width:320px) {
+    .movie:hover .movie__delete{
+        display: block;
+    }
+
 }
 
-@media screen and (max-width:439px){
+
+@media screen and (max-width:320px){
     .movie__picture{
         width: 300px;
     }
+    .movie__delete{
+        display: block;
+        width: 15px;
+        height: 15px;
+        margin-right: 10px;
+        padding: 0;
+    }
+    .movie__name{
+        width: 240px;
+    }
+
+
+
 
 }
